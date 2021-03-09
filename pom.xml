@@ -15,6 +15,7 @@
 	<description>The restaurant voting system using Spring Framework</description>
 	<properties>
 		<java.version>15</java.version>
+		<javax-el.version>3.0.1-b12</javax-el.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -48,6 +49,12 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish</groupId>
+			<artifactId>javax.el</artifactId>
+			<version>${javax-el.version}</version>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 
