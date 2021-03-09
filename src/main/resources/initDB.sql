@@ -34,7 +34,7 @@ CREATE TABLE restaurants
     registered TIMESTAMP DEFAULT now() NOT NULL,
     enabled    BOOLEAN   DEFAULT TRUE  NOT NULL
 );
-CREATE UNIQUE INDEX restaurants_unique_id_name_idx ON restaurants (name);
+CREATE UNIQUE INDEX restaurants_unique_name_idx ON restaurants (name);
 
 CREATE TABLE dishes
 (
@@ -42,7 +42,7 @@ CREATE TABLE dishes
     rest_id INT                     NOT NULL,
     name    VARCHAR                 NOT NULL,
     date    TIMESTAMP DEFAULT now() NOT NULL,
-    price   INT                  NOT NULL,
+    price   INT                     NOT NULL,
     FOREIGN KEY (rest_id) REFERENCES restaurants (id) ON DELETE CASCADE
 );
 CREATE UNIQUE INDEX dishes_unique_name_date_idx ON dishes (name, date);
