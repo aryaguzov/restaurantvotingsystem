@@ -8,11 +8,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.sql.Timestamp;
 
-@NamedQueries({
-        @NamedQuery(name = Restaurant.DELETE, query = "DELETE FROM Restaurant r WHERE r.id=:id"),
-        @NamedQuery(name = Restaurant.GET_BY_NAME, query = "SELECT r FROM Restaurant r WHERE r.name=:name"),
-        @NamedQuery(name = Restaurant.GET_ALL_SORTED, query = "SELECT r FROM Restaurant r ORDER BY r.registered ASC")})
-
 @Getter
 @Setter
 @ToString
@@ -21,10 +16,6 @@ import java.sql.Timestamp;
 @Entity
 @Table(name = "restaurants", uniqueConstraints = {@UniqueConstraint(columnNames = "name", name = "unique_name_idx")})
 public class Restaurant {
-
-    public static final String DELETE = "restaurant.delete";
-    public static final String GET_BY_NAME = "restaurant.getByName";
-    public static final String GET_ALL_SORTED = "restaurant.getAllSorted";
 
     @Id
     @Column(name = "id")

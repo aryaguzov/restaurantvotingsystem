@@ -8,13 +8,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.sql.Timestamp;
 
-@NamedQueries({
-        @NamedQuery(name = Dish.DELETE, query = "DELETE FROM Dish d WHERE d.id=:id"),
-        @NamedQuery(name = Dish.GET_BY_NAME, query = "SELECT d FROM Dish d WHERE d.name=:name"),
-        @NamedQuery(name = Dish.GET_BY_DATE, query = "SELECT d FROM Dish d WHERE d.date=:date ORDER BY d.date ASC"),
-        @NamedQuery(name = Dish.GET_ALL_SORTED, query = "SELECT d FROM Dish d ORDER BY d.date ASC")
-})
-
 @Getter
 @Setter
 @ToString
@@ -23,11 +16,6 @@ import java.sql.Timestamp;
 @Entity
 @Table(name = "dishes", uniqueConstraints = {@UniqueConstraint(columnNames = {"name", "date"}, name = "unique_name_date_idx")})
 public class Dish {
-
-    public static final String DELETE = "Dish.delete";
-    public static final String GET_BY_NAME = "Dish.getByName";
-    public static final String GET_BY_DATE = "Dish.getByDate";
-    public static final String GET_ALL_SORTED = "Dish.getAllSorted";
 
     @Id
     @Column(name = "id")

@@ -10,13 +10,6 @@ import javax.validation.constraints.Size;
 import java.sql.Timestamp;
 import java.util.Set;
 
-
-@NamedQueries({
-        @NamedQuery(name = User.DELETE, query = "DELETE FROM User u WHERE u.id=:id"),
-        @NamedQuery(name = User.GET_BY_EMAIL, query = "SELECT u from User u WHERE u.email=:email"),
-        @NamedQuery(name = User.GET_ALL_SORTED, query = "SELECT u from User u ORDER BY u.id")
-})
-
 @Getter
 @Setter
 @ToString
@@ -26,10 +19,6 @@ import java.util.Set;
 @Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = "email", name = "unique_email_idx")})
 public class User {
     public static final int START_SEQ = 10000;
-
-    public static final String DELETE = "User.delete";
-    public static final String GET_BY_EMAIL = "User.getByEmail";
-    public static final String GET_ALL_SORTED = "User.getAllSorted";
 
     @Id
     @Column(name = "id")

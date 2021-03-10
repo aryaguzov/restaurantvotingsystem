@@ -6,11 +6,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 
-@NamedQueries({
-        @NamedQuery(name = Vote.DELETE, query = "DELETE FROM Vote v WHERE v.id=:id"),
-        @NamedQuery(name = Vote.GET_ALL_SORTED, query = "SELECT v FROM Vote v ORDER BY v.date")
-})
-
 @Getter
 @Setter
 @ToString
@@ -19,9 +14,6 @@ import java.sql.Timestamp;
 @Entity
 @Table(name = "votes", uniqueConstraints = {@UniqueConstraint(columnNames = {"rest_id", "vote", "date"}, name = "unique_rest_id_vote_date_idx")})
 public class Vote {
-
-    public static final String DELETE = "Vote.delete";
-    public static final String GET_ALL_SORTED = "Vote.getAllSorted";
 
     @Id
     @Column(name = "id")
