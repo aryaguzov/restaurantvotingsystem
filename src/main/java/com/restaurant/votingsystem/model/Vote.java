@@ -13,14 +13,7 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @Entity
 @Table(name = "votes", uniqueConstraints = {@UniqueConstraint(columnNames = {"rest_id", "vote", "date"}, name = "unique_rest_id_vote_date_idx")})
-public class Vote {
-
-    @Id
-    @Column(name = "id")
-    @SequenceGenerator(name = "global_seq", sequenceName = "global_seq", allocationSize = 1, initialValue = User.START_SEQ)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "global_seq")
-    private Integer id;
-
+public class Vote extends BaseEntity {
     @Column(name = "vote", nullable = false)
     @NotNull
     private int vote;
@@ -33,8 +26,4 @@ public class Vote {
     @JoinColumn(name = "rest_id")
     @NotNull
     private Restaurant restaurant;
-
-    public boolean isNew() {
-        return this.id == null;
-    }
 }

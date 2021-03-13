@@ -15,14 +15,7 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @Entity
 @Table(name = "dishes", uniqueConstraints = {@UniqueConstraint(columnNames = {"name", "date"}, name = "unique_name_date_idx")})
-public class Dish {
-
-    @Id
-    @Column(name = "id")
-    @SequenceGenerator(name = "global_seq", sequenceName = "global_seq", allocationSize = 1, initialValue = User.START_SEQ)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "global_seq")
-    private Integer id;
-
+public class Dish extends BaseEntity {
     @Column(name = "name", nullable = false)
     @NotBlank
     @Size(min = 2, max = 100)
@@ -40,8 +33,4 @@ public class Dish {
     @JoinColumn(name = "rest_id")
     @NotNull
     private Restaurant restaurant;
-
-    public boolean isNew() {
-        return this.id == null;
-    }
 }
