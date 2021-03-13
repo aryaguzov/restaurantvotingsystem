@@ -35,11 +35,11 @@ public class DishService {
     @CacheEvict(value = "dishes", allEntries = true)
     @Transactional
     public void delete(int id) {
-        checkNotFoundWithId(repository.delete(id), id);
+        repository.deleteById(id);
     }
 
     public Dish get(int id) {
-        return checkNotFoundWithId(repository.findById(id).get(), id);
+        return repository.findById(id).orElseThrow();
     }
 
     public List<Dish> getAllByDate(LocalDate date) {
@@ -50,7 +50,7 @@ public class DishService {
     @CacheEvict(value = "dishes", allEntries = true)
     public void update(Dish dish) {
         Assert.notNull(dish, "Dish must not be null.");
-        checkNotFoundWithId(repository.save(dish), dish.getId());
+        repository.save(dish);
     }
 
     public List<Dish> getAll() {

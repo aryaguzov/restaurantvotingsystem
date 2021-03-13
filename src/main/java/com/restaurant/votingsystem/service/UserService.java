@@ -11,9 +11,6 @@ import org.springframework.util.Assert;
 import java.util.List;
 import java.util.Objects;
 
-import static com.restaurant.votingsystem.util.ValidationUtil.checkNotFound;
-import static com.restaurant.votingsystem.util.ValidationUtil.checkNotFoundWithId;
-
 @Service
 @Transactional(readOnly = true)
 public class UserService {
@@ -35,22 +32,23 @@ public class UserService {
     @CacheEvict(value = "users", allEntries = true)
     @Transactional
     public void delete(int id) {
-        checkNotFoundWithId(repository.delete(id), id);
+        repository.deleteById(id);
     }
 
     public User get(int id) {
-        return checkNotFoundWithId(repository.findById(id).get(), id);
+        return repository.findById(id).orElseThrow();
     }
 
-    public User getByEmail(String email) {
+    public User findByEmail(String email) {
         Assert.notNull(email, "Email must not be null.");
-        return checkNotFound(repository.getByEmail(email), "email= " + email);
+        return repository.findByEmail(email);
     }
 
     @CacheEvict(value = "users", allEntries = true)
+    @Transactional
     public void update(User user) {
         Assert.notNull(user, "User must not be null.");
-        checkNotFoundWithId(repository.save(user), user.getId());
+        repository.save(user);
     }
 
     public List<User> getAll() {

@@ -1,15 +1,15 @@
 package com.restaurant.votingsystem.model;
 
 import lombok.*;
-import org.hibernate.annotations.BatchSize;
-import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.beans.ConstructorProperties;
 import java.time.LocalDateTime;
+import java.util.EnumSet;
 import java.util.Set;
 
 @Entity()
@@ -18,10 +18,12 @@ import java.util.Set;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
+@RequiredArgsConstructor
 @ToString(callSuper = true, exclude = {"password"})
 public class User extends BaseEntity {
     @Column(name = "name", nullable = false)
     @NotBlank
+    @NonNull
     @Size(min = 2, max = 100)
     private String name;
 
@@ -49,4 +51,28 @@ public class User extends BaseEntity {
     @ElementCollection(fetch = FetchType.EAGER)
     @Column(name = "role")
     private Set<Role> roles;
+
+    public User(Integer id, String name, String email, String password, Role role) {
+        super(id);
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.enabled = true;
+        this.registered = LocalDateTime.now();
+        this.roles = EnumSet.of(role);
+    }
+
+    public User(User user) {
+        this(user.getId(), user.getName(), user.getEmail(), user.getPassword(), user.isEnabled(), user.getRegistered(), user.getRoles());
+    }
+
+    public User(Integer id, String name, String email, String password, boolean enabled, LocalDateTime registered, Set<Role> roles) {
+        super(id);
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.enabled = enabled;
+        this.registered = registered;
+        setRoles(roles);
+    }
 }

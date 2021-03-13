@@ -35,22 +35,23 @@ public class RestaurantService {
     @CacheEvict(value = "restaurants", allEntries = true)
     @Transactional
     public void delete(int id) {
-        checkNotFoundWithId(repository.delete(id), id);
+        repository.deleteById(id);
     }
 
     public Restaurant get(int id) {
-        return checkNotFoundWithId(repository.findById(id).get(), id);
+        return repository.findById(id).orElseThrow();
     }
 
     public Restaurant findByName(String name) {
         Assert.notNull(name, "Name must not be null.");
-        return checkNotFound(repository.findByName(name), "name= " + name);
+        return repository.findByName(name);
     }
 
     @CacheEvict(value = "restaurants", allEntries = true)
+    @Transactional
     public void update(Restaurant restaurant) {
         Assert.notNull(restaurant, "Restaurant must not be null.");
-        checkNotFoundWithId(repository.save(restaurant), restaurant.getId());
+        repository.save(restaurant);
     }
 
     public List<Restaurant> getAll() {
