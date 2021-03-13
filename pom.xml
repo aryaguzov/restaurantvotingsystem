@@ -9,13 +9,18 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.restaurant</groupId>
-	<artifactId>votingsystem</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>votingsystem</name>
+	<artifactId>voting-system</artifactId>
+	<version>1.0</version>
+	<name>voting-system</name>
 	<description>The restaurant voting system using Spring Framework</description>
 	<properties>
 		<java.version>15</java.version>
 		<javax-el.version>3.0.1-b12</javax-el.version>
+		<!--Cache-->
+		<ehcache.version>3.9.2</ehcache.version>
+		<!--    Tests  -->
+		<junit.version>4.13.2</junit.version>
+		<assertj.version>3.19.0</assertj.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -55,6 +60,44 @@
 			<artifactId>javax.el</artifactId>
 			<version>${javax-el.version}</version>
 			<scope>provided</scope>
+		</dependency>
+
+		<!-- Cache -->
+		<dependency>
+			<groupId>javax.cache</groupId>
+			<artifactId>cache-api</artifactId>
+			<version>1.1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.ehcache</groupId>
+			<artifactId>ehcache</artifactId>
+			<scope>runtime</scope>
+			<version>${ehcache.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.glassfish.jaxb</groupId>
+					<artifactId>jaxb-runtime</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!--Test-->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.assertj</groupId>
+			<artifactId>assertj-core</artifactId>
+			<version>${assertj.version}</version>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 
