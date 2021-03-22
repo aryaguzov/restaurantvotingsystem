@@ -12,8 +12,6 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
-import static com.restaurant.votingsystem.util.ValidationUtil.checkNotFoundWithId;
-
 @Service
 @Transactional(readOnly = true)
 public class DishService {
@@ -48,6 +46,7 @@ public class DishService {
     }
 
     @CacheEvict(value = "dishes", allEntries = true)
+    @Transactional
     public void update(Dish dish) {
         Assert.notNull(dish, "Dish must not be null.");
         repository.save(dish);

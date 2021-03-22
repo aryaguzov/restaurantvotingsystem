@@ -11,9 +11,6 @@ import org.springframework.util.Assert;
 import java.util.List;
 import java.util.Objects;
 
-import static com.restaurant.votingsystem.util.ValidationUtil.checkNotFound;
-import static com.restaurant.votingsystem.util.ValidationUtil.checkNotFoundWithId;
-
 @Service
 @Transactional(readOnly = true)
 public class RestaurantService {

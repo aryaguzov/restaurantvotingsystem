@@ -7,7 +7,6 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.beans.ConstructorProperties;
 import java.time.LocalDateTime;
 import java.util.EnumSet;
 import java.util.Set;
@@ -41,7 +40,7 @@ public class User extends BaseEntity {
     @Column(name = "enabled", nullable = false, columnDefinition = "Default true")
     private boolean enabled;
 
-    @Column(name = "registered", nullable = false, columnDefinition = "Timestamp default now()")
+    @Column(name = "registered", nullable = false, columnDefinition = "LocalDateTime default now()")
     @NotNull
     private LocalDateTime registered;
 

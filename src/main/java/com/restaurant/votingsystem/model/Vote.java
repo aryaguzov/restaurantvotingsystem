@@ -4,7 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.sql.Timestamp;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -20,10 +20,21 @@ public class Vote extends BaseEntity {
 
     @Column(name = "date", nullable = false, columnDefinition = "Timestamp default now()")
     @NotNull
-    private Timestamp date;
+    private LocalDate date;
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "rest_id")
     @NotNull
     private Restaurant restaurant;
+
+    public Vote(Integer id, int vote, LocalDate date, Restaurant restaurant) {
+        super(id);
+        this.vote = vote;
+        this.date = date;
+        this.restaurant = restaurant;
+    }
+
+    public Vote(Vote vote) {
+        this(vote.getId(), vote.getVote(), vote.getDate(), vote.getRestaurant());
+    }
 }

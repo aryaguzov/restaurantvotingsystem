@@ -4,9 +4,8 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -26,10 +25,21 @@ public class Restaurant extends BaseEntity{
     @Size(min = 2, max = 100)
     private String contacts;
 
-    @Column(name = "registered", nullable = false, columnDefinition = "Timestamp default now()")
-    @NotNull
-    private Timestamp registered;
+    @Column(name = "registered", nullable = false, columnDefinition = "LocalDateTime default now()")
+    private LocalDateTime registered;
 
     @Column(name = "enabled", nullable = false, columnDefinition = "Default true")
     private boolean enabled;
+
+    public Restaurant(Integer id, @NotBlank @Size(min = 2, max = 100) String name, @NotBlank @Size(min = 2, max = 100) String contacts, LocalDateTime registered, boolean enabled) {
+        super(id);
+        this.name = name;
+        this.contacts = contacts;
+        this.registered = registered;
+        this.enabled = enabled;
+    }
+
+    public Restaurant(Restaurant restaurant) {
+        this(restaurant.getId(), restaurant.getName(), restaurant.getContacts(), restaurant.getRegistered(), restaurant.isEnabled());
+    }
 }

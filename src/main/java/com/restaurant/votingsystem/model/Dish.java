@@ -6,7 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.sql.Timestamp;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -21,9 +21,9 @@ public class Dish extends BaseEntity {
     @Size(min = 2, max = 100)
     private String name;
 
-    @Column(name = "date", nullable = false, columnDefinition = "Timestamp default now()")
+    @Column(name = "date", nullable = false, columnDefinition = "LocalDateTime default now()")
     @NotNull
-    private Timestamp date;
+    private LocalDate date;
 
     @Column(name = "price", nullable = false)
     @NotNull
@@ -33,4 +33,16 @@ public class Dish extends BaseEntity {
     @JoinColumn(name = "rest_id")
     @NotNull
     private Restaurant restaurant;
+
+    public Dish(Integer id, String name, LocalDate date, int price, Restaurant restaurant) {
+        super(id);
+        this.name = name;
+        this.date = date;
+        this.price = price;
+        this.restaurant = restaurant;
+    }
+
+    public Dish(Dish dish) {
+        this(dish.getId(), dish.getName(), dish.getDate(), dish.getPrice(), dish.getRestaurant());
+    }
 }
