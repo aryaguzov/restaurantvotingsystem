@@ -19,8 +19,8 @@ VALUES (10000, 'USER'),
        (10001, 'ADMIN');
 
 INSERT INTO RESTAURANTS(NAME, CONTACTS, REGISTERED)
-VALUES ('Breaking Bad', 'Los Angeles, USA', '2015-02-20'),
-       ('Lucky Pub', 'Melitopol, Ukraine', '2021-02-20');
+VALUES ('BreakingBad', 'Los Angeles, USA', '2015-02-20'),
+       ('LuckyPub', 'Melitopol, Ukraine', '2021-02-20');
 
 INSERT INTO DISHES(REST_ID, NAME, PRICE, DATE)
 VALUES (10002, 'Pizza', 5, '2021-02-15'),

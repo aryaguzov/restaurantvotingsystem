@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Assert;
 
 import java.util.List;
 import java.util.Objects;
@@ -42,7 +41,7 @@ public class VoteService {
     @CacheEvict(value = "votes", allEntries = true)
     @Transactional
     public void update(Vote vote) {
-        Assert.notNull(vote, "Vote must not be null.");
+        Objects.requireNonNull(vote, "Vote must not be null.");
         repository.save(vote);
     }
 

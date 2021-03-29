@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Assert;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -48,7 +47,7 @@ public class DishService {
     @CacheEvict(value = "dishes", allEntries = true)
     @Transactional
     public void update(Dish dish) {
-        Assert.notNull(dish, "Dish must not be null.");
+        Objects.requireNonNull(dish, "Dish must not be null.");
         repository.save(dish);
     }
 

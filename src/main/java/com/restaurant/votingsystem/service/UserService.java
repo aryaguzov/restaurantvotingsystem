@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Assert;
 
 import java.util.List;
 import java.util.Objects;
@@ -40,14 +39,14 @@ public class UserService {
     }
 
     public User findByEmail(String email) {
-        Assert.notNull(email, "Email must not be null.");
+        Objects.requireNonNull(email, "Email must not be null.");
         return repository.findByEmail(email);
     }
 
     @CacheEvict(value = "users", allEntries = true)
     @Transactional
     public void update(User user) {
-        Assert.notNull(user, "User must not be null.");
+        Objects.requireNonNull(user, "User must not be null.");
         repository.save(user);
     }
 

@@ -27,14 +27,14 @@ public class Dish extends BaseEntity {
 
     @Column(name = "price", nullable = false)
     @NotNull
-    private int price;
+    private Integer price;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "rest_id")
     @NotNull
     private Restaurant restaurant;
 
-    public Dish(Integer id, String name, LocalDate date, int price, Restaurant restaurant) {
+    public Dish(Integer id, String name, LocalDate date, Integer price, Restaurant restaurant) {
         super(id);
         this.name = name;
         this.date = date;

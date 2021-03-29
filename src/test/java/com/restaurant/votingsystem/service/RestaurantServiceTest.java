@@ -49,12 +49,6 @@ class RestaurantServiceTest extends AbstractServiceTest {
     }
 
     @Test
-    void findByName() {
-        Restaurant restaurant = restaurantService.findByName("Lucky Pub");
-        RESTAURANT_MATCHER.assertMatch(restaurant, restaurant2);
-    }
-
-    @Test
     void update() {
         Restaurant updated = getUpdated();
         restaurantService.update(updated);
