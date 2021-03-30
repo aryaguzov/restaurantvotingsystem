@@ -7,21 +7,31 @@ import org.springframework.data.util.ProxyUtils;
 import org.springframework.util.Assert;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @MappedSuperclass
 @Access(AccessType.FIELD)
 @Getter
 @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString
-public abstract class BaseEntity implements Persistable<Integer> {
+public abstract class AbstractEntity implements Persistable<Integer> {
     public static final int START_SEQ = 10000;
 
     @Id
     @SequenceGenerator(name = "global_seq", sequenceName = "global_seq", allocationSize = 1, initialValue = START_SEQ)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "global_seq")
     protected Integer id;
+
+    @Column(name = "date", nullable = false, columnDefinition = "LocalDateTime default now()")
+    private LocalDateTime date;
+
+    protected AbstractEntity() {
+    }
+
+    protected AbstractEntity(Integer id, LocalDateTime date) {
+        this.id = id;
+        this.date = date;
+    }
 
     public Integer id() {
         Assert.notNull(id, "Entity must have id.");
@@ -41,7 +51,7 @@ public abstract class BaseEntity implements Persistable<Integer> {
         if (obj == null || !getClass().equals(ProxyUtils.getUserClass(obj))) {
             return false;
         }
-        BaseEntity that = (BaseEntity) obj;
+        AbstractEntity that = (AbstractEntity) obj;
         return id != null && id.equals(that.id);
     }
 

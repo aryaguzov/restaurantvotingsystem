@@ -7,6 +7,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.EnumSet;
 import java.util.Set;
@@ -15,16 +16,8 @@ import java.util.Set;
 @Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = "email", name = "unique_email_idx")})
 @Setter
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
-@RequiredArgsConstructor
 @ToString(callSuper = true, exclude = {"password"})
-public class User extends BaseEntity {
-    @Column(name = "name", nullable = false)
-    @NotBlank
-    @NonNull
-    @Size(min = 2, max = 100)
-    private String name;
+public class User extends AbstractNamedEntity {
 
     @Column(name = "email", nullable = false)
     @NotBlank
@@ -40,9 +33,9 @@ public class User extends BaseEntity {
     @Column(name = "enabled", nullable = false, columnDefinition = "Default true")
     private boolean enabled;
 
-    @Column(name = "registered", nullable = false, columnDefinition = "LocalDateTime default now()")
+    @Column(name = "last_vote")
     @NotNull
-    private LocalDateTime registered;
+    private LocalDate lastVote;
 
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"),
@@ -51,27 +44,27 @@ public class User extends BaseEntity {
     @Column(name = "role")
     private Set<Role> roles;
 
-    public User(Integer id, String name, String email, String password, Role role) {
-        super(id);
-        this.name = name;
+    public User() {
+    }
+
+    public User(Integer id, String name, String email, String password, LocalDateTime date, Role role) {
+        super(id, name, date);
         this.email = email;
         this.password = password;
         this.enabled = true;
-        this.registered = LocalDateTime.now();
         this.roles = EnumSet.of(role);
     }
 
     public User(User user) {
-        this(user.getId(), user.getName(), user.getEmail(), user.getPassword(), user.isEnabled(), user.getRegistered(), user.getRoles());
+        this(user.getId(), user.getName(), user.getEmail(), user.getPassword(), user.isEnabled(), user.getDate(), user.getLastVote(), user.getRoles());
     }
 
-    public User(Integer id, String name, String email, String password, boolean enabled, LocalDateTime registered, Set<Role> roles) {
-        super(id);
-        this.name = name;
+    public User(Integer id, String name, String email, String password, boolean enabled, LocalDateTime date, LocalDate lastVote, Set<Role> roles) {
+        super(id, name, date);
         this.email = email;
         this.password = password;
         this.enabled = enabled;
-        this.registered = registered;
+        this.lastVote = lastVote;
         setRoles(roles);
     }
 }

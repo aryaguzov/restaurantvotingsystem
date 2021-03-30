@@ -9,12 +9,13 @@ CREATE SEQUENCE global_seq START WITH 10000;
 
 CREATE TABLE users
 (
-    id         INT       DEFAULT nextval('global_seq') PRIMARY KEY,
-    name       VARCHAR                 NOT NULL,
-    email      VARCHAR                 NOT NULL,
-    password   VARCHAR                 NOT NULL,
-    enabled    BOOLEAN   DEFAULT TRUE  NOT NULL,
-    registered TIMESTAMP DEFAULT now() NOT NULL
+    id        INT       DEFAULT nextval('global_seq') PRIMARY KEY,
+    name      VARCHAR                 NOT NULL,
+    email     VARCHAR                 NOT NULL,
+    password  VARCHAR                 NOT NULL,
+    enabled   BOOLEAN   DEFAULT TRUE  NOT NULL,
+    date      TIMESTAMP DEFAULT now() NOT NULL,
+    last_vote DATE                NOT NULL
 );
 CREATE UNIQUE INDEX users_unique_email_idx ON users (email);
 
@@ -28,11 +29,11 @@ CREATE TABLE user_roles
 
 CREATE TABLE restaurants
 (
-    id         INT       DEFAULT nextval('global_seq') PRIMARY KEY,
-    name       VARCHAR                 NOT NULL,
-    contacts   VARCHAR                 NOT NULL,
-    registered TIMESTAMP DEFAULT now() NOT NULL,
-    enabled    BOOLEAN   DEFAULT TRUE  NOT NULL
+    id       INT       DEFAULT nextval('global_seq') PRIMARY KEY,
+    name     VARCHAR                 NOT NULL,
+    contacts VARCHAR                 NOT NULL,
+    date     TIMESTAMP DEFAULT now() NOT NULL,
+    enabled  BOOLEAN   DEFAULT TRUE  NOT NULL
 );
 CREATE UNIQUE INDEX restaurants_unique_name_idx ON restaurants (name);
 
@@ -51,7 +52,7 @@ CREATE TABLE votes
 (
     id      INT       DEFAULT nextval('global_seq') PRIMARY KEY,
     rest_id INT                     NOT NULL,
-    vote    INT                     NOT NULL,
+    vote    INT       DEFAULT 0     NOT NULL,
     date    TIMESTAMP DEFAULT now() NOT NULL,
     FOREIGN KEY (rest_id) REFERENCES restaurants (id) ON DELETE CASCADE
 );

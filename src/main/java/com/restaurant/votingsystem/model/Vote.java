@@ -4,33 +4,29 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@ToString
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "votes", uniqueConstraints = {@UniqueConstraint(columnNames = {"rest_id", "vote", "date"}, name = "unique_rest_id_vote_date_idx")})
-public class Vote extends BaseEntity {
+@ToString(callSuper = true)
+public class Vote extends AbstractEntity {
     @Column(name = "vote", nullable = false)
     @NotNull
     private int vote;
 
-    @Column(name = "date", nullable = false, columnDefinition = "Timestamp default now()")
-    @NotNull
-    private LocalDate date;
-
-    @OneToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "rest_id")
     @NotNull
     private Restaurant restaurant;
 
-    public Vote(Integer id, int vote, LocalDate date, Restaurant restaurant) {
-        super(id);
+    public Vote() {
+    }
+
+    public Vote(Integer id, int vote, LocalDateTime date, Restaurant restaurant) {
+        super(id, date);
         this.vote = vote;
-        this.date = date;
         this.restaurant = restaurant;
     }
 
