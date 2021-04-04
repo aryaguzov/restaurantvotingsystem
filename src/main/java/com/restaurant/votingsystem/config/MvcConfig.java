@@ -30,7 +30,6 @@ import java.util.List;
 public class MvcConfig implements WebMvcConfigurer {
     public MappingJackson2HttpMessageConverter jacksonMessageConverter() {
         MappingJackson2HttpMessageConverter messageConverter = new MappingJackson2HttpMessageConverter();
-
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new Hibernate5Module());
         mapper.registerModule(new JavaTimeModule());
@@ -52,7 +51,6 @@ public class MvcConfig implements WebMvcConfigurer {
 
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-        //Here we add our custom-configured HttpMessageConverter
         converters.add(jacksonMessageConverter());
         WebMvcConfigurer.super.configureMessageConverters(converters);
     }
