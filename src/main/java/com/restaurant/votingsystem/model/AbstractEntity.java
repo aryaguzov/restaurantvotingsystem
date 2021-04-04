@@ -23,9 +23,13 @@ public abstract class AbstractEntity implements Persistable<Integer> {
     protected Integer id;
 
     @Column(name = "date", nullable = false, columnDefinition = "LocalDateTime default now()")
-    private LocalDateTime date;
+    protected LocalDateTime date;
 
     protected AbstractEntity() {
+    }
+
+    public AbstractEntity(Integer id) {
+        this.id = id;
     }
 
     protected AbstractEntity(Integer id, LocalDateTime date) {

@@ -1,6 +1,9 @@
 package com.restaurant.votingsystem.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -24,12 +27,12 @@ public class Restaurant extends AbstractNamedEntity {
     @Column(name = "enabled", nullable = false, columnDefinition = "Default true")
     private boolean enabled;
 
-    @JsonIgnore
+    @JsonIgnoreProperties("restaurant")
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")
     @OrderBy("date DESC")
     private List<Dish> dishes;
 
-    @JsonIgnore
+    @JsonIgnoreProperties("restaurant")
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")
     @OrderBy("date ASC")
     private List<Vote> votes;

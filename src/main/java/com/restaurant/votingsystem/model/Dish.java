@@ -1,5 +1,7 @@
 package com.restaurant.votingsystem.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -17,7 +19,7 @@ public class Dish extends AbstractNamedEntity {
     @NotNull
     private Integer price;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "rest_id")
     @NotNull
     private Restaurant restaurant;

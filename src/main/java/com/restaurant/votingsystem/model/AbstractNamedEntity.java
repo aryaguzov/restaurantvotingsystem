@@ -18,13 +18,18 @@ public abstract class AbstractNamedEntity extends AbstractEntity {
     @NotBlank
     @NonNull
     @Size(min = 2, max = 100)
-    private String name;
+    protected String name;
 
     protected AbstractNamedEntity() {
     }
 
     protected AbstractNamedEntity(Integer id, LocalDateTime date) {
         super(id, date);
+    }
+
+    protected AbstractNamedEntity(Integer id, String name) {
+        super(id);
+        this.name = name;
     }
 
     protected AbstractNamedEntity(Integer id, String name, LocalDateTime date) {

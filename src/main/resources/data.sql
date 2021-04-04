@@ -10,11 +10,11 @@ DELETE
 FROM USERS;
 ALTER SEQUENCE GLOBAL_SEQ RESTART WITH 10000;
 
-INSERT INTO USERS(NAME, EMAIL, PASSWORD, LAST_VOTE)
-VALUES ('User', 'user@gmail.com', 'password', '2021-03-30'),
-       ('Admin', 'admin@gmail.com', 'password', '2021-03-30'),
-       ('User1', 'user@yahoo.com', 'password', '2021-03-30'),
-       ('User2', 'user@facebook.com', 'password', '2021-03-30');
+INSERT INTO USERS(NAME, EMAIL, PASSWORD, DATE, LAST_VOTE)
+VALUES ('User', 'user@gmail.com', 'password', '2021-02-20', '2021-03-30'),
+       ('Admin', 'admin@gmail.com', 'password', '2021-02-20', '2021-03-30'),
+       ('User1', 'user@yahoo.com', 'password', '2021-02-20', '2021-03-30'),
+       ('User2', 'user@facebook.com', 'password', '2021-02-20', '2021-03-30');
 
 INSERT INTO USER_ROLES(USER_ID, ROLE)
 VALUES (10000, 'USER'),
