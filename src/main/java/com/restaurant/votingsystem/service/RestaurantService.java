@@ -2,6 +2,7 @@ package com.restaurant.votingsystem.service;
 
 import com.restaurant.votingsystem.model.Restaurant;
 import com.restaurant.votingsystem.repository.RestaurantRepository;
+import com.restaurant.votingsystem.util.ValidationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
@@ -47,5 +48,9 @@ public class RestaurantService {
 
     public List<Restaurant> getAll() {
         return repository.findAll();
+    }
+
+    public Restaurant getWithDishes(Integer id) {
+        return repository.getWithDishes(id);
     }
 }
