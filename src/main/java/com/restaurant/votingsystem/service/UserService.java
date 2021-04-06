@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Objects;
 
+import static com.restaurant.votingsystem.util.ValidationUtil.*;
+
 @Service
 @Transactional(readOnly = true)
 public class UserService {
@@ -25,13 +27,13 @@ public class UserService {
     @Transactional
     public User create(User user) {
         Objects.requireNonNull(user, "User must not be null.");
-        return repository.save(user);
+        return checkNotFoundWithId(repository.save(user), user.id());
     }
 
     @CacheEvict(value = "users", allEntries = true)
     @Transactional
     public void delete(int id) {
-        repository.deleteById(id);
+        checkNotFoundWithId(repository.delete(id), id);
     }
 
     public User get(int id) {
@@ -40,14 +42,14 @@ public class UserService {
 
     public User findByEmail(String email) {
         Objects.requireNonNull(email, "Email must not be null.");
-        return repository.findByEmail(email);
+        return checkNotFound(repository.getByEmail(email), "email" + email);
     }
 
     @CacheEvict(value = "users", allEntries = true)
     @Transactional
     public void update(User user) {
         Objects.requireNonNull(user, "User must not be null.");
-        repository.save(user);
+        checkNotFoundWithId(repository.save(user), user.id());
     }
 
     public List<User> getAll() {

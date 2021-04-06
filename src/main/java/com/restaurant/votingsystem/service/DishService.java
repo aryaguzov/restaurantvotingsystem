@@ -7,9 +7,11 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
+
+import static com.restaurant.votingsystem.util.ValidationUtil.*;
 
 @Service
 @Transactional(readOnly = true)
@@ -32,23 +34,23 @@ public class DishService {
     @CacheEvict(value = "dishes", allEntries = true)
     @Transactional
     public void delete(int id) {
-        repository.deleteById(id);
+        checkNotFoundWithId(repository.delete(id), id);
     }
 
     public Dish get(int id) {
         return repository.findById(id).orElseThrow();
     }
 
-    public List<Dish> getAllByDate(LocalDate date) {
+    public List<Dish> getAllByDate(LocalDateTime date) {
         Objects.requireNonNull(date, "Date must not be null.");
-        return repository.getAllByDateOrderByDateAsc(date);
+        return repository.getAllByDate(date);
     }
 
     @CacheEvict(value = "dishes", allEntries = true)
     @Transactional
     public void update(Dish dish) {
         Objects.requireNonNull(dish, "Dish must not be null.");
-        repository.save(dish);
+        checkNotFoundWithId(repository.save(dish), dish.id());
     }
 
     public List<Dish> getAll() {

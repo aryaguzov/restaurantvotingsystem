@@ -2,14 +2,16 @@ package com.restaurant.votingsystem.service;
 
 import com.restaurant.votingsystem.model.Restaurant;
 import com.restaurant.votingsystem.repository.RestaurantRepository;
-import com.restaurant.votingsystem.util.ValidationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
+
+import static com.restaurant.votingsystem.util.ValidationUtil.*;
 
 @Service
 @Transactional(readOnly = true)
@@ -32,7 +34,7 @@ public class RestaurantService {
     @CacheEvict(value = "restaurants", allEntries = true)
     @Transactional
     public void delete(int id) {
-        repository.deleteById(id);
+        checkNotFoundWithId(repository.delete(id), id);
     }
 
     public Restaurant get(int id) {
@@ -43,14 +45,14 @@ public class RestaurantService {
     @Transactional
     public void update(Restaurant restaurant) {
         Objects.requireNonNull(restaurant, "Restaurant must not be null.");
-        repository.save(restaurant);
+        checkNotFoundWithId(repository.save(restaurant), restaurant.id());
     }
 
     public List<Restaurant> getAll() {
-        return repository.findAll();
+        return repository.findAll(Sort.by(Sort.Direction.ASC, "name"));
     }
 
     public Restaurant getWithDishes(Integer id) {
-        return repository.getWithDishes(id);
+        return checkNotFoundWithId(repository.getWithDishes(id), id);
     }
 }
