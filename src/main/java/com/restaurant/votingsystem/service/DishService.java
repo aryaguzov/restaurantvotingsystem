@@ -2,6 +2,7 @@ package com.restaurant.votingsystem.service;
 
 import com.restaurant.votingsystem.model.Dish;
 import com.restaurant.votingsystem.repository.DishRepository;
+import com.restaurant.votingsystem.util.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
@@ -38,7 +39,7 @@ public class DishService {
     }
 
     public Dish get(int id) {
-        return repository.findById(id).orElseThrow();
+        return repository.findById(id).orElseThrow(() -> new NotFoundException("Not found the dish with id=" + id));
     }
 
     public List<Dish> getAllByDate(LocalDateTime date) {

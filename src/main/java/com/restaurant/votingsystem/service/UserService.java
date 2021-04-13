@@ -2,6 +2,7 @@ package com.restaurant.votingsystem.service;
 
 import com.restaurant.votingsystem.model.User;
 import com.restaurant.votingsystem.repository.UserRepository;
+import com.restaurant.votingsystem.util.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
@@ -37,7 +38,7 @@ public class UserService {
     }
 
     public User get(int id) {
-        return repository.findById(id).orElseThrow();
+        return repository.findById(id).orElseThrow(() -> new NotFoundException("Not found the user with id=" + id));
     }
 
     public User findByEmail(String email) {

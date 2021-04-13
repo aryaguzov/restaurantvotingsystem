@@ -2,6 +2,7 @@ package com.restaurant.votingsystem.service;
 
 import com.restaurant.votingsystem.model.Restaurant;
 import com.restaurant.votingsystem.repository.RestaurantRepository;
+import com.restaurant.votingsystem.util.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.data.domain.Sort;
@@ -38,7 +39,7 @@ public class RestaurantService {
     }
 
     public Restaurant get(int id) {
-        return repository.findById(id).orElseThrow();
+        return repository.findById(id).orElseThrow(() -> new NotFoundException("Not found the restaurant with id=" + id));
     }
 
     @CacheEvict(value = "restaurants", allEntries = true)
