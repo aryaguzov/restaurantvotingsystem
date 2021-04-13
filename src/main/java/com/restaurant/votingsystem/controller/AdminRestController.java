@@ -26,7 +26,6 @@ import static com.restaurant.votingsystem.util.ValidationUtil.*;
 @RestController
 @RequestMapping(path = "rest/admin", produces = MediaType.APPLICATION_JSON_VALUE)
 public class AdminRestController {
-
     private UserService userService;
     private RestaurantService restaurantService;
     private DishService dishService;
@@ -173,9 +172,10 @@ public class AdminRestController {
         dishService.update(updated);
     }
 
-    // curl "localhost:8081/rest/admin/dishes/filter?date=2021-03-30T00:00:00"
+    //
+
     @GetMapping("/dishes/filter")
-    public List<Dish> getAllByDate(@RequestParam @Nullable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDateTime date) {
+    public List<Dish> getAllByDate(@RequestParam @Nullable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime date) {
         log.info("Getting all dishes by date={}", date);
         return dishService.getAllByDate(date);
     }

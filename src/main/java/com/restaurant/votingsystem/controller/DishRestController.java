@@ -7,79 +7,41 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
 @RestController
 @RequestMapping(path = "rest/dishes", produces = MediaType.APPLICATION_JSON_VALUE)
 public class DishRestController {
-
-    DishService service;
+    private DishService service;
 
     @Autowired
     public DishRestController(DishService service) {
         this.service = service;
     }
 
+    // curl localhost:8081/rest/dishes
     @GetMapping
-    public ResponseEntity<List> getAll() {
-        List<Dish> all = service.getAll();
-        log.info("getAll");
-        if (!all.isEmpty()) {
-            return new ResponseEntity<>(all, HttpStatus.OK);
-        }
-        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+    public List<Dish> getAll() {
+        log.info("Getting all the dishes");
+        return service.getAll();
     }
 
-    @GetMapping("{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Dish> get(@PathVariable Integer id) {
-        log.info("get {}", id);
-        return new ResponseEntity<>(service.get(id), HttpStatus.OK);
+    // curl localhost:8081/rest/dishes/{id}
+    @GetMapping("/{id}")
+    public Dish get(@PathVariable Integer id) {
+        log.info("Getting the dish with id={}", id);
+        return service.get(id);
     }
 
-    @DeleteMapping("/{id}")
-    @ResponseStatus(code = HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable Integer id) {
-        log.info("delete {}", id);
-        service.delete(id);
-    }
-
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.CREATED)
-    public Dish create(@RequestBody Dish dish) {
-        log.info("create {}", dish);
-        return service.create(dish);
-    }
-
-    @PutMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.OK)
-    public Dish update(@PathVariable Integer id, @RequestBody Dish updated) {
-        log.info("update {} with id={}", updated, id);
-        Dish dish = service.get(id);
-        if (updated.getName() != null) {
-            dish.setName(updated.getName());
-        }
-        if (updated.getDate() != null) {
-            dish.setDate(updated.getDate());
-        }
-        if (updated.getPrice() != null) {
-            dish.setPrice(updated.getPrice());
-        }
-        if (updated.getRestaurant() != null) {
-            dish.setPrice(updated.getPrice());
-        }
-        return service.create(dish);
-    }
-
+    // curl localhost:8081/rest/dishes/filter?
     @GetMapping("/filter")
     @ResponseStatus(HttpStatus.OK)
-    public List<Dish> getAllByDate(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
-        log.info("get all by date");
+    public List<Dish> getAllByDate(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime date) {
+        log.info("Getting all dishes filtered by date");
         return service.getAllByDate(date);
     }
 }
