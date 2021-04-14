@@ -8,15 +8,15 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
 @Transactional(readOnly = true)
 public interface DishRepository extends JpaRepository<Dish, Integer> {
 
-    @Query("SELECT d FROM Dish d WHERE d.date=:date ORDER BY d.date ASC")
-    List<Dish> getAllByDate(LocalDateTime date);
+    @Query("SELECT d FROM Dish d WHERE d.menu.date=:date")
+    List<Dish> getAllByDate(LocalDate date);
 
     @Transactional
     @Modifying

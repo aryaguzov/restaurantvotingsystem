@@ -15,6 +15,9 @@ import java.time.LocalDate;
 @ToString(callSuper = true)
 public class Vote extends AbstractEntity {
 
+    @Column(name = "date", nullable = false, columnDefinition = "LocalDate default now()")
+    private LocalDate date;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     @NotNull
@@ -29,7 +32,8 @@ public class Vote extends AbstractEntity {
     }
 
     public Vote(Integer id, LocalDate date, User user, Restaurant restaurant) {
-        super(id, date);
+        super(id);
+        this.date = date;
         this.user = user;
         this.restaurant = restaurant;
     }

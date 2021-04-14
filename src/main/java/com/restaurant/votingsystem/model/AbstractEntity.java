@@ -9,7 +9,6 @@ import org.springframework.data.util.ProxyUtils;
 import org.springframework.util.Assert;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 
 @MappedSuperclass
 @Access(AccessType.FIELD)
@@ -24,19 +23,11 @@ public abstract class AbstractEntity implements Persistable<Integer> {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "global_seq")
     protected Integer id;
 
-    @Column(name = "date", nullable = false, columnDefinition = "LocalDate default now()")
-    protected LocalDate date;
-
     protected AbstractEntity() {
     }
 
     public AbstractEntity(Integer id) {
         this.id = id;
-    }
-
-    protected AbstractEntity(Integer id, LocalDate date) {
-        this.id = id;
-        this.date = date;
     }
 
     public Integer id() {

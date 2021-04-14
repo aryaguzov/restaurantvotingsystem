@@ -1,6 +1,5 @@
 package com.restaurant.votingsystem.model;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -17,6 +16,9 @@ import java.util.Set;
 @ToString(callSuper = true)
 public class Menu extends AbstractEntity {
 
+    @Column(name = "date", nullable = false, columnDefinition = "LocalDate default now()")
+    private LocalDate date;
+
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "rest_id", nullable = false)
@@ -30,7 +32,8 @@ public class Menu extends AbstractEntity {
     }
 
     public Menu(Integer id, LocalDate date, Restaurant restaurant, Set<Dish> dishes) {
-        super(id, date);
+        super(id);
+        this.date = date;
         this.restaurant = restaurant;
         this.dishes = dishes;
     }
