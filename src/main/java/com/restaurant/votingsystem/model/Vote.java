@@ -1,36 +1,36 @@
 package com.restaurant.votingsystem.model;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "votes", uniqueConstraints = {@UniqueConstraint(columnNames = {"rest_id", "vote", "date"}, name = "unique_rest_id_vote_date_idx")})
+@Table(name = "votes", uniqueConstraints = {@UniqueConstraint(columnNames = {"rest_id", "date"}, name = "votes_unique_user_date_idx")})
 @ToString(callSuper = true)
 public class Vote extends AbstractEntity {
-    @Column(name = "vote", nullable = false)
-    @NotNull
-    private int vote;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "rest_id")
+    @JoinColumn(name = "user_id", nullable = false)
+    @NotNull
+    private User user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "rest_id", nullable = false)
     @NotNull
     private Restaurant restaurant;
 
     public Vote() {
     }
 
-    public Vote(Integer id, int vote, LocalDateTime date, Restaurant restaurant) {
+    public Vote(Integer id, LocalDate date, User user, Restaurant restaurant) {
         super(id, date);
-        this.vote = vote;
+        this.user = user;
         this.restaurant = restaurant;
-    }
-
-    public Vote(Vote vote) {
-        this(vote.getId(), vote.getVote(), vote.getDate(), vote.getRestaurant());
     }
 }

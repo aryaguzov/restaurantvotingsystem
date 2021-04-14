@@ -34,11 +34,11 @@ public class RestaurantService {
 
     @CacheEvict(value = "restaurants", allEntries = true)
     @Transactional
-    public void delete(int id) {
+    public void delete(Integer id) {
         checkNotFoundWithId(repository.delete(id), id);
     }
 
-    public Restaurant get(int id) {
+    public Restaurant get(Integer id) {
         return repository.findById(id).orElseThrow(() -> new NotFoundException("Not found the restaurant with id=" + id));
     }
 
@@ -53,7 +53,7 @@ public class RestaurantService {
         return repository.findAll(Sort.by(Sort.Direction.ASC, "name"));
     }
 
-    public Restaurant getWithDishes(Integer id) {
-        return checkNotFoundWithId(repository.getWithDishes(id), id);
+    public Restaurant getWithMenus(Integer id) {
+        return checkNotFoundWithId(repository.getWithMenus(id), id);
     }
 }

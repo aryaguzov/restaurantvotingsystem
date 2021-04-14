@@ -2,6 +2,7 @@ package com.restaurant.votingsystem.service;
 
 import com.restaurant.votingsystem.model.Dish;
 import com.restaurant.votingsystem.repository.DishRepository;
+import com.restaurant.votingsystem.repository.MenuRepository;
 import com.restaurant.votingsystem.util.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -18,43 +19,59 @@ import static com.restaurant.votingsystem.util.ValidationUtil.*;
 @Transactional(readOnly = true)
 public class DishService {
 
-    private DishRepository repository;
+    private DishRepository dishRepository;
+    private MenuRepository menuRepository;
 
     @Autowired
-    public void setRepository(DishRepository repository) {
-        this.repository = repository;
+    public void setDishRepository(DishRepository dishRepository, MenuRepository menuRepository) {
+        this.dishRepository = dishRepository;
+        this.menuRepository = menuRepository;
     }
 
     @CacheEvict(value = "dishes", allEntries = true)
     @Transactional
-    public Dish create(Dish dish) {
+    public Dish create(Dish dish, Integer menuId) {
         Objects.requireNonNull(dish, "Dish must not be null.");
-        return repository.save(dish);
+        return save(dish, menuId);
     }
 
     @CacheEvict(value = "dishes", allEntries = true)
     @Transactional
-    public void delete(int id) {
-        checkNotFoundWithId(repository.delete(id), id);
+    public void delete(Integer dishId, Integer menuId) {
+        checkNotFoundWithId(dishRepository.delete(dishId, menuId), dishId);
     }
 
-    public Dish get(int id) {
-        return repository.findById(id).orElseThrow(() -> new NotFoundException("Not found the dish with id=" + id));
+    public Dish get(Integer dishId, Integer menuId) {
+        return dishRepository.findById(dishId)
+                .filter(dish -> {
+                    assert dish.getMenu().getId() != null;
+                    return dish.getMenu().getId().equals(menuId);
+                })
+                .orElseThrow(() -> new NotFoundException("Not found the dish with id=" + dishId));
     }
 
     public List<Dish> getAllByDate(LocalDateTime date) {
         Objects.requireNonNull(date, "Date must not be null.");
-        return repository.getAllByDate(date);
+        return dishRepository.getAllByDate(date);
     }
 
     @CacheEvict(value = "dishes", allEntries = true)
     @Transactional
-    public void update(Dish dish) {
+    public void update(Dish dish, Integer menuId) {
         Objects.requireNonNull(dish, "Dish must not be null.");
-        checkNotFoundWithId(repository.save(dish), dish.id());
+        checkNotFoundWithId(save(dish, menuId), dish.id());
     }
 
-    public List<Dish> getAll() {
-        return repository.findAll();
+    public List<Dish> getAll(Integer menuId) {
+        return dishRepository.getAll(menuId);
+    }
+
+    @Transactional
+    public Dish save(Dish dish, Integer menuId) {
+        if (!dish.isNew() && get(dish.getId(), menuId) == null) {
+            return null;
+        }
+        dish.setMenu(menuRepository.getOne(menuId));
+        return dishRepository.save(dish);
     }
 }

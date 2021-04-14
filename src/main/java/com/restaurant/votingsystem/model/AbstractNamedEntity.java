@@ -1,12 +1,15 @@
 package com.restaurant.votingsystem.model;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @MappedSuperclass
 @Getter
@@ -23,7 +26,7 @@ public abstract class AbstractNamedEntity extends AbstractEntity {
     protected AbstractNamedEntity() {
     }
 
-    protected AbstractNamedEntity(Integer id, LocalDateTime date) {
+    protected AbstractNamedEntity(Integer id, LocalDate date) {
         super(id, date);
     }
 
@@ -32,7 +35,7 @@ public abstract class AbstractNamedEntity extends AbstractEntity {
         this.name = name;
     }
 
-    protected AbstractNamedEntity(Integer id, String name, LocalDateTime date) {
+    protected AbstractNamedEntity(Integer id, String name, LocalDate date) {
         super(id, date);
         this.name = name;
     }

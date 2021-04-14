@@ -33,11 +33,11 @@ public class UserService {
 
     @CacheEvict(value = "users", allEntries = true)
     @Transactional
-    public void delete(int id) {
+    public void delete(Integer id) {
         checkNotFoundWithId(repository.delete(id), id);
     }
 
-    public User get(int id) {
+    public User get(Integer id) {
         return repository.findById(id).orElseThrow(() -> new NotFoundException("Not found the user with id=" + id));
     }
 

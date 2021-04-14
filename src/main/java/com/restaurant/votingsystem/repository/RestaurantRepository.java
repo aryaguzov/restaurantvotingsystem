@@ -14,9 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 public interface RestaurantRepository extends JpaRepository<Restaurant, Integer> {
 
     //    https://stackoverflow.com/a/46013654/548473
-    @EntityGraph(attributePaths = {"dishes"}, type = EntityGraph.EntityGraphType.LOAD)
+    @EntityGraph(attributePaths = {"menus"}, type = EntityGraph.EntityGraphType.LOAD)
     @Query("SELECT r FROM Restaurant r WHERE r.id=?1")
-    Restaurant getWithDishes(@Param("id") Integer id);
+    Restaurant getWithMenus(@Param("id") Integer id);
 
     @Transactional
     @Modifying

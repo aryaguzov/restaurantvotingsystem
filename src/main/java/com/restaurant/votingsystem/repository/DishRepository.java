@@ -20,6 +20,9 @@ public interface DishRepository extends JpaRepository<Dish, Integer> {
 
     @Transactional
     @Modifying
-    @Query("DELETE FROM Dish d WHERE d.id=:id")
-    int delete(@Param("id") Integer id);
+    @Query("DELETE FROM Dish d WHERE d.id=:id AND d.menu.id=:menuId")
+    int delete(@Param("id") Integer id, @Param("menuId") Integer menuId);
+
+    @Query("SELECT d FROM Dish d WHERE d.menu.id=:menuId ORDER BY d.menu.date DESC")
+    List<Dish> getAll(@Param("menuId") Integer menuId);
 }

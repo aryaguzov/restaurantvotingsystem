@@ -1,17 +1,16 @@
 package com.restaurant.votingsystem.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "dishes", uniqueConstraints = {@UniqueConstraint(columnNames = {"name", "date"}, name = "unique_name_date_idx")})
+@Table(name = "dishes")
 @ToString(callSuper = true)
 public class Dish extends AbstractNamedEntity {
 
@@ -20,20 +19,16 @@ public class Dish extends AbstractNamedEntity {
     private Integer price;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "rest_id")
+    @JoinColumn(name = "menu_id", nullable = false)
     @NotNull
-    private Restaurant restaurant;
+    private Menu menu;
 
     public Dish() {
     }
 
-    public Dish(Integer id, String name, LocalDateTime date, Integer price, Restaurant restaurant) {
-        super(id, name, date);
+    public Dish(Integer id, String name, Integer price, Menu menu) {
+        super(id, name);
         this.price = price;
-        this.restaurant = restaurant;
-    }
-
-    public Dish(Dish dish) {
-        this(dish.getId(), dish.getName(), dish.getDate(), dish.getPrice(), dish.getRestaurant());
+        this.menu = menu;
     }
 }
