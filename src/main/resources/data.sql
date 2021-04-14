@@ -10,11 +10,11 @@ DELETE
 FROM USERS;
 ALTER SEQUENCE GLOBAL_SEQ RESTART WITH 10000;
 
-INSERT INTO USERS(NAME, EMAIL, PASSWORD, DATE, LAST_VOTE)
-VALUES ('User', 'user@gmail.com', 'password', '2021-02-20', '2021-03-30'),
-       ('Admin', 'admin@gmail.com', 'password', '2021-02-20', '2021-03-30'),
-       ('User1', 'user@yahoo.com', 'password', '2021-02-20', '2021-03-30'),
-       ('User2', 'user@facebook.com', 'password', '2021-02-20', '2021-03-30');
+INSERT INTO USERS(NAME, EMAIL, PASSWORD)
+VALUES ('User', 'user@gmail.com', 'password'),
+       ('Admin', 'admin@gmail.com', 'password'),
+       ('User1', 'user@yahoo.com', 'password'),
+       ('User2', 'user@facebook.com', 'password');
 
 INSERT INTO USER_ROLES(USER_ID, ROLE)
 VALUES (10000, 'USER'),
@@ -22,34 +22,40 @@ VALUES (10000, 'USER'),
        (10002, 'USER'),
        (10003, 'USER');
 
-INSERT INTO RESTAURANTS(NAME, CONTACTS, DATE)
-VALUES ('BreakingBad', 'Los Angeles, USA', '2015-02-20'),
-       ('LuckyPub', 'Odessa, Ukraine', '2021-02-20'),
-       ('Consuela', 'Paris, France', '2010-02-21'),
-       ('No Time To Die', 'Amsterdam, Netherlands', '2021-03-15'),
-       ('Drink Milk', 'Kyiv, Ukraine', '2014-10-12');
+INSERT INTO RESTAURANTS(NAME, CONTACTS)
+VALUES ('BreakingBad', 'Los Angeles, USA'),
+       ('LuckyPub', 'Odessa, Ukraine'),
+       ('Consuela', 'Paris, France'),
+       ('No Time To Die', 'Amsterdam, Netherlands'),
+       ('Drink Milk', 'Kyiv, Ukraine');
 
-INSERT INTO DISHES(REST_ID, NAME, PRICE, DATE)
-VALUES (10004, 'Pizza', 5, '2021-03-28'),
-       (10004, 'Steak', 10, '2021-03-28'),
-       (10004, 'Beer', 2, '2021-03-28'),
-       (10005, 'Soup', 6, '2021-03-29'),
-       (10005, 'Pizza', 6, '2021-03-29'),
-       (10005, 'Aperol', 3, '2021-03-29'),
-       (10006, 'Soup', 6, '2021-03-30'),
-       (10006, 'Pizza', 6, '2021-03-30'),
-       (10006, 'Beer', 3, '2021-03-30'),
-       (10007, 'Soup', 6, '2021-03-27'),
-       (10007, 'Pizza', 6, '2021-03-27'),
-       (10007, 'Beer', 3, '2021-03-27'),
-       (10008, 'Soup', 6, '2021-03-26'),
-       (10008, 'Pizza', 6, '2021-03-26'),
-       (10008, 'Pasta', 3, '2021-01-26');
+INSERT INTO MENUS(REST_ID, DATE)
+VALUES (10004, '2021-03-24'),
+       (10005, '2021-03-25'),
+       (10006, '2021-03-26'),
+       (10007, '2021-03-27'),
+       (10008, '2021-03-28');
 
-INSERT INTO VOTES(REST_ID)
-VALUES (10004),
-       (10005),
-       (10006),
-       (10007),
-       (10008);
+INSERT INTO DISHES(MENU_ID, NAME, PRICE)
+VALUES (10009, 'Pizza', 5),
+       (10009, 'Steak', 10),
+       (10009, 'Beer', 2),
+       (10010, 'Soup', 6),
+       (10010, 'Pizza', 6),
+       (10010, 'Aperol', 3),
+       (10011, 'Soup', 6),
+       (10011, 'Pizza', 6),
+       (10011, 'Beer', 3),
+       (10012, 'Soup', 6),
+       (10012, 'Pizza', 6),
+       (10012, 'Beer', 3),
+       (10012, 'Soup', 6),
+       (10013, 'Pizza', 6),
+       (10013, 'Pasta', 3);
+
+INSERT INTO VOTES(USER_ID, REST_ID, DATE)
+VALUES (10000, 10004, '2021-03-25'),
+       (10001, 10005, '2021-03-26'),
+       (10002, 10006, '2021-03-27'),
+       (10003, 10007, '2021-03-28');
 
