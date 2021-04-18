@@ -35,7 +35,10 @@ public class RestaurantService {
     @CacheEvict(value = "restaurants", allEntries = true)
     @Transactional
     public void delete(Integer id) {
-        checkNotFoundWithId(repository.delete(id), id);
+        if (!repository.existsById(id)) {
+            throw new NotFoundException("Not found the restaurant with id=" + id);
+        }
+        repository.delete(id);
     }
 
     public Restaurant get(Integer id) {

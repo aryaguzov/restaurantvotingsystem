@@ -11,6 +11,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -42,13 +43,14 @@ public class MenuService {
         if (menuWithDishes != null) {
             menuWithDishes.forEach(dish -> {
                 dish.setId(null);
+                dish.setMenu(menu);
                 dishRepository.save(dish);
             });
         }
         return created;
     }
 
-    public Menu get(Integer menuId, Integer restId) {
+    public Menu get(Integer restId, Integer menuId) {
         return menuRepository.findById(menuId)
                 .filter(menu -> {
                     assert menu.getRestaurant().getId() != null;
@@ -63,15 +65,18 @@ public class MenuService {
 
     @CacheEvict(value = "menus", allEntries = true)
     @Transactional
-    public void delete(Integer menuId, Integer restId) {
-        checkNotFoundWithId(menuRepository.delete(menuId, restId), menuId);
+    public void delete(Integer restId, Integer menuId) {
+        if (!menuRepository.existsById(menuId)) {
+            throw new NotFoundException("Not found the menu with id=" + menuId);
+        }
+        menuRepository.delete(restId, menuId);
     }
 
     @CacheEvict(value = "menus", allEntries = true)
     @Transactional
     public void update(Menu menu, Integer restId) {
         Objects.requireNonNull(menu, "Menu must not be null.");
-        Set<Dish> menuWithOldDishes = get(menu.getId(), restId).getDishes();
+        Set<Dish> menuWithOldDishes = get(restId, menu.getId()).getDishes();
         if (menuWithOldDishes != null) {
             menuWithOldDishes.forEach(dish -> dishRepository.delete(dish.getId(), menu.getId()));
         }
@@ -80,6 +85,7 @@ public class MenuService {
         if (menuWithNewDishes != null) {
             menuWithNewDishes.forEach(dish -> {
                 dish.setId(null);
+                dish.setMenu(menu);
                 dishRepository.save(dish);
             });
         }
@@ -90,9 +96,14 @@ public class MenuService {
         return checkNotFoundWithId(menuRepository.getWithDishes(id), id);
     }
 
+    public List<Menu> getAllByDate(LocalDate date) {
+        Objects.requireNonNull(date);
+        return menuRepository.getAllByDate(date);
+    }
+
     @Transactional
     public Menu save(Menu menu, Integer restId) {
-        if (!menu.isNew() && get(menu.getId(), restId) == null) {
+        if (!menu.isNew() && get(restId, menu.getId()) == null) {
             return null;
         }
         menu.setRestaurant(restaurantRepository.getOne(restId));

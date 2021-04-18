@@ -9,7 +9,6 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
@@ -48,11 +47,6 @@ public class DishService {
                     return dish.getMenu().getId().equals(menuId);
                 })
                 .orElseThrow(() -> new NotFoundException("Not found the dish with id=" + dishId));
-    }
-
-    public List<Dish> getAllByDate(LocalDate date) {
-        Objects.requireNonNull(date, "Date must not be null.");
-        return dishRepository.getAllByDate(date);
     }
 
     @CacheEvict(value = "dishes", allEntries = true)

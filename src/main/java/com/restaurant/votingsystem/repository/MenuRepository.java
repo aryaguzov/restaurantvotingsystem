@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
@@ -22,9 +23,12 @@ public interface MenuRepository extends JpaRepository<Menu, Integer> {
 
     @Transactional
     @Modifying
-    @Query("DELETE FROM Menu m WHERE m.id=:id AND m.restaurant.id=:restId")
-    int delete(@Param("id") Integer id, @Param("restId") Integer restId);
+    @Query("DELETE FROM Menu m WHERE m.restaurant.id=:restId AND m.id=:menuId")
+    int delete(@Param("restId") Integer restId, @Param("menuId") Integer menuId);
 
     @Query("SELECT m FROM Menu m WHERE m.restaurant.id=:restId ORDER BY m.date DESC")
     List<Menu> getAll(@Param("restId") Integer restId);
+
+    @Query("SELECT m FROM Menu m WHERE m.date=:date ORDER BY m.date DESC")
+    List<Menu> getAllByDate(@Param("date") LocalDate date);
 }

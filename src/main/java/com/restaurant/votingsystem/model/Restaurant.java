@@ -1,15 +1,14 @@
 package com.restaurant.votingsystem.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Getter
 @Setter
@@ -22,6 +21,11 @@ public class Restaurant extends AbstractNamedEntity {
     @NotBlank
     @Size(min = 2, max = 100)
     private String contacts;
+
+    @JsonIgnoreProperties("restaurant")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")
+    @OrderBy("date DESC")
+    private List<Menu> menus;
 
     public Restaurant() {
     }

@@ -12,7 +12,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@Table(name = "menus")
+@Table(name = "menus", uniqueConstraints = {@UniqueConstraint(columnNames = {"rest_id", "date"}, name = "rest_date_idx")})
 @ToString(callSuper = true)
 public class Menu extends AbstractEntity {
 

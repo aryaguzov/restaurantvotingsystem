@@ -34,7 +34,10 @@ public class UserService {
     @CacheEvict(value = "users", allEntries = true)
     @Transactional
     public void delete(Integer id) {
-        checkNotFoundWithId(repository.delete(id), id);
+        if (!repository.existsById(id)) {
+            throw new NotFoundException("Not found the user with id=" + id);
+        }
+        repository.delete(id);
     }
 
     public User get(Integer id) {
