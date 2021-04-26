@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import static com.restaurant.votingsystem.util.ValidationUtil.checkNotFound;
 import static com.restaurant.votingsystem.util.ValidationUtil.checkNotFoundWithId;
 
 @Service
@@ -97,8 +98,8 @@ public class MenuService {
     }
 
     public List<Menu> getAllByDate(LocalDate date) {
-        Objects.requireNonNull(date);
-        return menuRepository.getAllByDate(date);
+        return checkNotFound(menuRepository.getAllByDate(date),
+                String.format("date=%s", date.toString()));
     }
 
     @Transactional

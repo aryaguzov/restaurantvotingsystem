@@ -28,21 +28,21 @@ public class AdminRestController {
         this.userService = userService;
     }
 
-    // curl localhost:8081/api/v1/admin/users
+    // curl localhost:8081/api/v1/admin/users -u admin:password
     @GetMapping
     public List<User> getAll() {
         log.info("Getting all users");
         return userService.getAll();
     }
 
-    // curl localhost:8081/api/v1/admin/users/{id}
+    // curl localhost:8081/api/v1/admin/users/{id} -u admin:password
     @GetMapping("/{id}")
     public User get(@PathVariable Integer id) {
         log.info("Getting the user with id={}", id);
         return userService.get(id);
     }
 
-    // curl -X DELETE localhost:8081/api/v1/admin/users/{id}
+    // curl -X DELETE localhost:8081/api/v1/admin/users/{id} -u admin:password
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Integer id) {
@@ -50,7 +50,14 @@ public class AdminRestController {
         userService.delete(id);
     }
 
-    // curl -X POST localhost:8081/api/v1/admin/users -H 'Content-type:application/json' -d '{"name":"{name}","email":"{email}","password":"{password}","roles":["USER"]}'
+    // curl 'localhost:8081/api/v1/admin/users/by?email={email}' -u admin:password
+    @GetMapping("/by")
+    public User getByEmail(@RequestParam("email") String email) {
+        log.info("Getting the user with email={}", email);
+        return userService.getByEmail(email);
+    }
+
+    // curl -X POST localhost:8081/api/v1/admin/users -H 'Content-type:application/json' -d '{"name":"{name}","email":"{email}","password":"{password}","roles":["USER"]}' -u admin:password
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<User> create(@RequestBody User user) {
         log.info("Creating a user={}", user);
@@ -62,7 +69,7 @@ public class AdminRestController {
         return ResponseEntity.created(uriOfNewResource).body(created);
     }
 
-    // curl -X PUT localhost:8081/api/v1/admin/users/{id} -H 'Content-type:application/json' -d '{"name":"{newName}","email":"{newEmail}","password":"{newPassword}","roles":["USER"]}'
+    // curl -X PUT localhost:8081/api/v1/admin/users/{id} -H 'Content-type:application/json' -d '{"name":"{newName}","email":"{newEmail}","password":"{newPassword}","roles":["USER"]}' -u admin:password
     @PutMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@RequestBody User updated, @PathVariable Integer id) {

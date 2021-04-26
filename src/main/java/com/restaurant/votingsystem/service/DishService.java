@@ -37,7 +37,10 @@ public class DishService {
     @CacheEvict(value = "dishes", allEntries = true)
     @Transactional
     public void delete(Integer dishId, Integer menuId) {
-        checkNotFoundWithId(dishRepository.delete(dishId, menuId), dishId);
+        if (!dishRepository.existsById(dishId)) {
+            throw new NotFoundException("Not found the dish with id=" + dishId);
+        }
+        dishRepository.delete(dishId, menuId);
     }
 
     public Dish get(Integer dishId, Integer menuId) {

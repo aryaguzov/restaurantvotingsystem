@@ -31,21 +31,21 @@ public class MenuRestController {
         this.menuService = menuService;
     }
 
-    // curl localhost:8081/api/v1/admin/restaurants/{restId}/menus
+    // curl localhost:8081/api/v1/admin/restaurants/{restId}/menus -u admin:password
     @GetMapping("/{restId}/menus")
     public List<Menu> getAll(@PathVariable Integer restId) {
         log.info("Getting all menus for the restaurant with id={}", restId);
         return menuService.getAll(restId);
     }
 
-    // curl localhost:8081/api/v1/admin/restaurants/{restId}/menus/{menuId}
+    // curl localhost:8081/api/v1/admin/restaurants/{restId}/menus/{menuId} -u admin:password
     @GetMapping("/{restId}/menus/{menuId}")
     public Menu get(@PathVariable Integer restId, @PathVariable Integer menuId) {
         log.info("Getting the menu with id={} for the restaurant with id={}", menuId, restId);
         return menuService.get(restId, menuId);
     }
 
-    // curl -X DELETE localhost:8081/api/v1/admin/restaurants/{restId}/menus/{menuId}
+    // curl -X DELETE localhost:8081/api/v1/admin/restaurants/{restId}/menus/{menuId} -u admin:password
     @DeleteMapping("/{restId}/menus/{menuId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Integer restId, @PathVariable Integer menuId) {
@@ -53,7 +53,7 @@ public class MenuRestController {
         menuService.delete(restId, menuId);
     }
 
-    // curl -X POST localhost:8081/api/v1/admin/restaurants/{restId}/menus -H 'Content-type:application/json' -d '{"date":"2021-03-03","dishes":[{"name": "Pizza","price": 100},{"name": "Bread","price": 10}]}'
+    // curl -X POST localhost:8081/api/v1/admin/restaurants/{restId}/menus -H 'Content-type:application/json' -d '{"date":"2021-03-03","dishes":[{"name": "Pizza","price": 100},{"name": "Bread","price": 10}]}' -u admin:password
     @PostMapping(value = "/{restId}/menus", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Menu> create(@RequestBody Menu menu, @PathVariable Integer restId) {
         log.info("Creating menu={} for the restaurant with id={}", menu, restId);
@@ -65,7 +65,7 @@ public class MenuRestController {
         return ResponseEntity.created(uriOfNewResource).body(created);
     }
 
-    // curl -X PUT localhost:8081/api/v1/admin/restaurants/{restId}/menus/{menuId} -H 'Content-type:application/json' -d '{"date":"2021-04-04","dishes":[{"name": "NewPizza","price": 1100},{"name": "NewBread","price": 100}]}'
+    // curl -X PUT localhost:8081/api/v1/admin/restaurants/{restId}/menus/{menuId} -H 'Content-type:application/json' -d '{"date":"2021-04-04","dishes":[{"name": "NewPizza","price": 1100},{"name": "NewBread","price": 100}]}' -u admin:password
     @PutMapping(value = "/{restId}/menus/{menuId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@RequestBody Menu updated, @PathVariable Integer restId, @PathVariable Integer menuId) {
@@ -74,14 +74,14 @@ public class MenuRestController {
         menuService.update(updated, restId);
     }
 
-    // curl localhost:8081/api/v1/admin/restaurants/{restId}/menus/{menuId}/dishes
-    @GetMapping(value = "/{restId}/menus/{menuId}/dishes")
-    public Menu getWithDishes(@PathVariable Integer restId, @PathVariable Integer menuId) {
-        log.info("Getting dishes for the menu with id={} and the restaurant with id={}", menuId, restId);
+    // curl localhost:8081/api/v1/admin/restaurants/menus/{menuId}/dishes -u admin:password
+    @GetMapping(value = "/menus/{menuId}/dishes")
+    public Menu getWithDishes(@PathVariable Integer menuId) {
+        log.info("Getting dishes for the menu with id={}", menuId);
         return menuService.getWithDishes(menuId);
     }
 
-    // curl 'localhost:8081/api/v1/admin/restaurants/menus?date={date}'
+    // curl 'localhost:8081/api/v1/admin/restaurants/menus?date={date}' -u admin:password
     @GetMapping(value = "/menus")
     public List<Menu> getAllByDate(@RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         log.info("Getting all menus filtering by date={}", date);

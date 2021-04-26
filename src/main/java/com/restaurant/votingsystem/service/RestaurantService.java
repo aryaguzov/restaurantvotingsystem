@@ -55,8 +55,4 @@ public class RestaurantService {
     public List<Restaurant> getAll() {
         return repository.findAll(Sort.by(Sort.Direction.ASC, "name"));
     }
-
-    public Restaurant getWithMenus(Integer id) {
-        return checkNotFoundWithId(repository.getWithMenus(id), id);
-    }
 }
