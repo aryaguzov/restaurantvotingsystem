@@ -1,21 +1,25 @@
 package com.restaurant.votingsystem.service;
 
+import com.restaurant.votingsystem.AuthorizedUser;
 import com.restaurant.votingsystem.model.User;
 import com.restaurant.votingsystem.repository.UserRepository;
 import com.restaurant.votingsystem.util.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
 
-import static com.restaurant.votingsystem.util.ValidationUtil.*;
+import static com.restaurant.votingsystem.util.ValidationUtil.checkNotFound;
+import static com.restaurant.votingsystem.util.ValidationUtil.checkNotFoundWithId;
 
-@Service
+@Service("userService")
 @Transactional(readOnly = true)
-public class UserService {
+public class UserService implements UserDetailsService {
 
     private UserRepository repository;
 
@@ -28,7 +32,7 @@ public class UserService {
     @Transactional
     public User create(User user) {
         Objects.requireNonNull(user, "User must not be null.");
-        return checkNotFoundWithId(repository.save(user), user.id());
+        return repository.save(user);
     }
 
     @CacheEvict(value = "users", allEntries = true)
@@ -44,9 +48,14 @@ public class UserService {
         return repository.findById(id).orElseThrow(() -> new NotFoundException("Not found the user with id=" + id));
     }
 
-    public User findByEmail(String email) {
+    public User getByEmail(String email) {
         Objects.requireNonNull(email, "Email must not be null.");
         return checkNotFound(repository.getByEmail(email), "email" + email);
+    }
+
+    public User getByName(String name) {
+        Objects.requireNonNull(name, "Name must not be null.");
+        return checkNotFound(repository.getByName(name), "name" + name);
     }
 
     @CacheEvict(value = "users", allEntries = true)
@@ -58,5 +67,14 @@ public class UserService {
 
     public List<User> getAll() {
         return repository.findAll();
+    }
+
+    @Override
+    public AuthorizedUser loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = repository.getByName(username);
+        if (user == null) {
+            throw new UsernameNotFoundException(String.format("Can't find a user with name %s", username));
+        }
+        return new AuthorizedUser(user);
     }
 }
