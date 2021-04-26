@@ -11,10 +11,10 @@ FROM USERS;
 ALTER SEQUENCE GLOBAL_SEQ RESTART WITH 10000;
 
 INSERT INTO USERS(NAME, EMAIL, PASSWORD)
-VALUES ('User', 'user@gmail.com', 'password'),
-       ('Admin', 'admin@gmail.com', 'password'),
-       ('User1', 'user@yahoo.com', 'password'),
-       ('User2', 'user@facebook.com', 'password');
+VALUES ('user', 'user@gmail.com', '$2a$10$A8N/AT2xBG3zQbmiwdgMIuSlnpNyVsa0HSx9murr9Ol1uKOdF.2wG'),
+       ('admin', 'admin@gmail.com', '$2a$10$A8N/AT2xBG3zQbmiwdgMIuSlnpNyVsa0HSx9murr9Ol1uKOdF.2wG'),
+       ('user1', 'user@yahoo.com', '$2a$10$A8N/AT2xBG3zQbmiwdgMIuSlnpNyVsa0HSx9murr9Ol1uKOdF.2wG'),
+       ('user2', 'user@facebook.com', '$2a$10$A8N/AT2xBG3zQbmiwdgMIuSlnpNyVsa0HSx9murr9Ol1uKOdF.2wG');
 
 INSERT INTO USER_ROLES(USER_ID, ROLE)
 VALUES (10000, 'USER'),
