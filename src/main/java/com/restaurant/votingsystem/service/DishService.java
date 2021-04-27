@@ -6,6 +6,8 @@ import com.restaurant.votingsystem.repository.MenuRepository;
 import com.restaurant.votingsystem.util.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -52,13 +54,14 @@ public class DishService {
                 .orElseThrow(() -> new NotFoundException("Not found the dish with id=" + dishId));
     }
 
-    @CacheEvict(value = "dishes", allEntries = true)
+    @CachePut(value = "dishes")
     @Transactional
     public void update(Dish dish, Integer menuId) {
         Objects.requireNonNull(dish, "Dish must not be null.");
         checkNotFoundWithId(save(dish, menuId), dish.id());
     }
 
+    @Cacheable(value = "dishes")
     public List<Dish> getAll(Integer menuId) {
         return dishRepository.getAll(menuId);
     }

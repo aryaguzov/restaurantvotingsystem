@@ -50,11 +50,11 @@ public class AdminRestController {
         userService.delete(id);
     }
 
-    // curl 'localhost:8081/api/v1/admin/users/by?email={email}' -u admin:password
+    // curl 'localhost:8081/api/v1/admin/users/by?name={name}' -u admin:password
     @GetMapping("/by")
-    public User getByEmail(@RequestParam("email") String email) {
-        log.info("Getting the user with email={}", email);
-        return userService.getByEmail(email);
+    public User getByName(@RequestParam("name") String name) {
+        log.info("Getting the user by name={}", name);
+        return userService.getByName(name);
     }
 
     // curl -X POST localhost:8081/api/v1/admin/users -H 'Content-type:application/json' -d '{"name":"{name}","email":"{email}","password":"{password}","roles":["USER"]}' -u admin:password

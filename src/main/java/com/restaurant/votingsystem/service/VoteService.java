@@ -8,6 +8,7 @@ import com.restaurant.votingsystem.util.exception.NotFoundException;
 import com.restaurant.votingsystem.util.exception.TimeOverException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,7 +38,7 @@ public class VoteService {
     @Transactional
     public Vote create(Vote vote, Integer userId, Integer restId) {
         Objects.requireNonNull(vote, "Vote must not be null.");
-        if (LocalTime.now().isAfter(LocalTime.of(11, 0))) {
+        if (LocalTime.now().isAfter(LocalTime.of(23, 0))) {
             throw new TimeOverException("Sorry, it's too late to vote today.");
         }
         return save(vote, userId, restId);
@@ -52,7 +53,7 @@ public class VoteService {
         voteRepository.delete(id);
     }
 
-    @CacheEvict(value = "votes", allEntries = true)
+    @CachePut(value = "votes")
     @Transactional
     public Vote update(Vote vote, Integer userId, Integer restId) {
         Objects.requireNonNull(vote, "Vote must not be null.");

@@ -12,9 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public interface UserRepository extends JpaRepository<User, Integer> {
 
-    @Query("SELECT u FROM User u WHERE u.email=:email")
-    User getByEmail(@Param("email") String email);
-
     @Query("SELECT u FROM User u WHERE u.name=:name")
     User getByName(@Param("name") String name);
 

@@ -50,7 +50,7 @@ public class RestaurantRestController {
         restaurantService.delete(id);
     }
 
-    // curl -X POST localhost:8081/api/v1/admin/restaurants -H 'Content-type:application/json' -d '{"date":"{date}","name":"{name}","contacts":"{contacts}"}' -u admin:password
+    // curl -X POST localhost:8081/api/v1/admin/restaurants -H 'Content-type:application/json' -d '{"name":"{name}","contacts":"{contacts}"}' -u admin:password
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Restaurant> create(@RequestBody Restaurant restaurant) {
         log.info("Creating a restaurant {}", restaurant);
@@ -62,7 +62,7 @@ public class RestaurantRestController {
         return ResponseEntity.created(uriOfNewResource).body(created);
     }
 
-    // curl -X PUT localhost:8081/api/v1/admin/restaurants/{id} -H 'Content-type:application/json' -d '{"date":"{date}","name":"{name}","contacts":"{contacts}"}' -u admin:password
+    // curl -X PUT localhost:8081/api/v1/admin/restaurants/{id} -H 'Content-type:application/json' -d '{"name":"{name}","contacts":"{contacts}"}' -u admin:password
     @PutMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@RequestBody Restaurant updated, @PathVariable Integer id) {

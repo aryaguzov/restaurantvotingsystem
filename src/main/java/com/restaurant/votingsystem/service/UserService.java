@@ -6,6 +6,8 @@ import com.restaurant.votingsystem.repository.UserRepository;
 import com.restaurant.votingsystem.util.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -48,23 +50,19 @@ public class UserService implements UserDetailsService {
         return repository.findById(id).orElseThrow(() -> new NotFoundException("Not found the user with id=" + id));
     }
 
-    public User getByEmail(String email) {
-        Objects.requireNonNull(email, "Email must not be null.");
-        return checkNotFound(repository.getByEmail(email), "email" + email);
-    }
-
     public User getByName(String name) {
         Objects.requireNonNull(name, "Name must not be null.");
         return checkNotFound(repository.getByName(name), "name" + name);
     }
 
-    @CacheEvict(value = "users", allEntries = true)
+    @CachePut(value = "users")
     @Transactional
     public void update(User user) {
         Objects.requireNonNull(user, "User must not be null.");
         checkNotFoundWithId(repository.save(user), user.id());
     }
 
+    @Cacheable(value = "users")
     public List<User> getAll() {
         return repository.findAll();
     }

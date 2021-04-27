@@ -5,6 +5,8 @@ import com.restaurant.votingsystem.repository.RestaurantRepository;
 import com.restaurant.votingsystem.util.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Objects;
 
-import static com.restaurant.votingsystem.util.ValidationUtil.*;
+import static com.restaurant.votingsystem.util.ValidationUtil.checkNotFoundWithId;
 
 @Service
 @Transactional(readOnly = true)
@@ -45,13 +47,14 @@ public class RestaurantService {
         return repository.findById(id).orElseThrow(() -> new NotFoundException("Not found the restaurant with id=" + id));
     }
 
-    @CacheEvict(value = "restaurants", allEntries = true)
+    @CachePut(value = "restaurants")
     @Transactional
     public void update(Restaurant restaurant) {
         Objects.requireNonNull(restaurant, "Restaurant must not be null.");
         checkNotFoundWithId(repository.save(restaurant), restaurant.id());
     }
 
+    @Cacheable(value = "restaurants")
     public List<Restaurant> getAll() {
         return repository.findAll(Sort.by(Sort.Direction.ASC, "name"));
     }
