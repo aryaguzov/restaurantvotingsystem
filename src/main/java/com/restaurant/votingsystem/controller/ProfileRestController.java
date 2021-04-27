@@ -24,18 +24,21 @@ public class ProfileRestController {
         this.userService = userService;
     }
 
+    // curl localhost:8081/api/v1/profile -u user:password
     @GetMapping
     public User get(@AuthenticationPrincipal AuthorizedUser authorizedUser) {
         log.info("Getting the user with id={}", authorizedUser.getId());
         return userService.get(authorizedUser.getId());
     }
 
+    // curl -X DELETE localhost:8081/api/v1/profile -u user:password
     @DeleteMapping
     public void delete(@AuthenticationPrincipal AuthorizedUser authorizedUser) {
         log.info("Deleting the user with id={}", authorizedUser.getId());
         userService.delete(authorizedUser.getId());
     }
 
+    // curl -X PUT localhost:8081/api/v1/profile -H 'Content-type:application/json' -d '{"name":"newName","email":"newEmail@gmail.com","password":"newPassword","roles":["USER"]}' -u user1:password
     @PutMapping
     public void update(@RequestBody User updated, @AuthenticationPrincipal AuthorizedUser authorizedUser) {
         assureIdConsistent(updated, authorizedUser.getId());
