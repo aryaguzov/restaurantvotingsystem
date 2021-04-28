@@ -1,23 +1,22 @@
 package com.restaurant.votingsystem.service;
 
 import com.restaurant.votingsystem.model.Restaurant;
-import org.junit.jupiter.api.Test;
+import com.restaurant.votingsystem.util.exception.NotFoundException;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.NoSuchElementException;
-
-import static org.junit.jupiter.api.Assertions.*;
 import static com.restaurant.votingsystem.RestaurantTestData.*;
+import static org.junit.Assert.assertThrows;
 
-class RestaurantServiceTest extends AbstractServiceTest {
+@Transactional
+public class RestaurantServiceTest extends AbstractServiceTest {
 
     @Autowired
     RestaurantService restaurantService;
 
     @Test
-    void create() {
+    public void create() {
         Restaurant created = restaurantService.create(getNew());
         int newId = created.id();
         Restaurant newRestaurant = getNew();
@@ -27,37 +26,36 @@ class RestaurantServiceTest extends AbstractServiceTest {
     }
 
     @Test
-    void delete() {
+    public void delete() {
         restaurantService.delete(RESTAURANT1_ID);
-        assertThrows(NoSuchElementException.class, () -> restaurantService.get(RESTAURANT1_ID));
+        assertThrows(NotFoundException.class, () -> restaurantService.get(RESTAURANT1_ID));
     }
 
     @Test
-    void deleteNotFound() {
-        assertThrows(EmptyResultDataAccessException.class, () -> restaurantService.delete(NOT_FOUND));
+    public void deleteNotFound() {
+        assertThrows(NotFoundException.class, () -> restaurantService.delete(NOT_FOUND));
     }
 
     @Test
-    void get() {
+    public void get() {
         Restaurant restaurant = restaurantService.get(RESTAURANT2_ID);
         RESTAURANT_MATCHER.assertMatch(restaurant, restaurant2);
     }
 
     @Test
-    void getNotFound() {
-        assertThrows(NoSuchElementException.class, () -> restaurantService.get(NOT_FOUND));
+    public void getNotFound() {
+        assertThrows(NotFoundException.class, () -> restaurantService.get(NOT_FOUND));
     }
 
     @Test
-    void update() {
+    public void update() {
         Restaurant updated = getUpdated();
-        //restaurantService.update(updated);
+        restaurantService.update(updated);
         RESTAURANT_MATCHER.assertMatch(restaurantService.get(RESTAURANT1_ID), getUpdated());
     }
 
     @Test
-    void getAll() {
-        List<Restaurant> all = restaurantService.getAll();
-        RESTAURANT_MATCHER.assertMatch(all, restaurant1, restaurant2, restaurant3, restaurant4, restaurant5);
+    public void getAll() {
+        RESTAURANT_MATCHER.assertMatch(restaurantService.getAll(), restaurants);
     }
 }

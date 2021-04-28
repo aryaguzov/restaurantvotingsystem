@@ -34,4 +34,8 @@ public class Restaurant extends AbstractNamedEntity {
         super(id, name);
         this.contacts = contacts;
     }
+
+    public Restaurant(Restaurant restaurant) {
+        this(restaurant.getId(), restaurant.getName(), restaurant.getContacts());
+    }
 }
