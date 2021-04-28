@@ -55,6 +55,11 @@ public class UserService implements UserDetailsService {
         return checkNotFound(repository.getByName(name), "name" + name);
     }
 
+    public User getByEmail(String email) {
+        Objects.requireNonNull(email, "Name must not be null.");
+        return checkNotFound(repository.getByEmail(email), "name" + email);
+    }
+
     @CachePut(value = "users")
     @Transactional
     public void update(User user) {

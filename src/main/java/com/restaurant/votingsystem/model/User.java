@@ -46,4 +46,8 @@ public class User extends AbstractNamedEntity {
         this.password = password;
         setRoles(roles);
     }
+
+    public User(User user) {
+        this(user.getId(), user.getName(), user.getEmail(), user.getPassword(), user.getRoles());
+    }
 }

@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import static com.restaurant.votingsystem.util.ValidationUtil.checkNotFoundWithId;
 
@@ -57,5 +58,16 @@ public class RestaurantService {
     @Cacheable(value = "restaurants")
     public List<Restaurant> getAll() {
         return repository.findAll(Sort.by(Sort.Direction.ASC, "name"));
+    }
+
+    public Restaurant getWithMenus(Integer id) {
+        return checkNotFoundWithId(repository.getWithMenus(id), id);
+    }
+
+    public List<Restaurant> getRestaurantsWithMenus() {
+        List<Restaurant> restaurantsWithMenus = getAll();
+        return restaurantsWithMenus.stream()
+                .map(restaurant -> getWithMenus(restaurant.getId()))
+                .collect(Collectors.toList());
     }
 }

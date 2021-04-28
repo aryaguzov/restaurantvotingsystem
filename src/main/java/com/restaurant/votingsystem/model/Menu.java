@@ -25,7 +25,7 @@ public class Menu extends AbstractEntity {
     private Restaurant restaurant;
 
     @NotNull
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "menu")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "menu")
     private Set<Dish> dishes;
 
     public Menu() {

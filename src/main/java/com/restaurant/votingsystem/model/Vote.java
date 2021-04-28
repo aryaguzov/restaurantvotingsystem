@@ -23,7 +23,7 @@ public class Vote extends AbstractEntity {
     @NotNull
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "rest_id", nullable = false)
     @NotNull
     private Restaurant restaurant;

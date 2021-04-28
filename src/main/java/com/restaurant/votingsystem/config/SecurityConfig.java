@@ -21,11 +21,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers("/api/v1/**")
-                .authenticated()
+        http
+                .antMatcher("/api/v1/**").authorizeRequests()
                 .antMatchers("/api/v1/admin/**").hasRole("ADMIN")
                 .antMatchers("/api/v1/restaurants/**").authenticated()
+                .antMatchers("/api/v1/profile").authenticated()
+                .antMatchers("/api/v1/votes/**").authenticated()
                 .and().httpBasic()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().csrf().disable();
