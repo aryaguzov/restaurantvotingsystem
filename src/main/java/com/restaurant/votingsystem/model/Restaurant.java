@@ -35,6 +35,12 @@ public class Restaurant extends AbstractNamedEntity {
         this.contacts = contacts;
     }
 
+    public Restaurant(Integer id, String name, String contacts, List<Menu> menus) {
+        super(id, name);
+        this.contacts = contacts;
+        this.menus = menus;
+    }
+
     public Restaurant(Restaurant restaurant) {
         this(restaurant.getId(), restaurant.getName(), restaurant.getContacts());
     }
