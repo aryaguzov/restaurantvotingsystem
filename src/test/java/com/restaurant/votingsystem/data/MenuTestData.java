@@ -21,22 +21,22 @@ public class MenuTestData {
     public static final int MENU5_ID = START_SEQ + 13;
     public static final int NOT_FOUND = 100000;
 
-    public static final Menu menu1 = new Menu(MENU1_ID, LocalDate.of(2021, Month.MARCH, 24), restaurant1, Set.of(dish1, dish2, dish3));
-    public static final Menu menu2 = new Menu(MENU2_ID, LocalDate.of(2021, Month.MARCH, 25), restaurant2, Set.of(dish4, dish5, dish6));
-    public static final Menu menu3 = new Menu(MENU3_ID, LocalDate.of(2021, Month.MARCH, 26), restaurant3, Set.of(dish7, dish8, dish9));
-    public static final Menu menu4 = new Menu(MENU4_ID, LocalDate.of(2021, Month.MARCH, 27), restaurant4, Set.of(dish10, dish11, dish12));
-    public static final Menu menu5 = new Menu(MENU5_ID, LocalDate.of(2021, Month.MARCH, 28), restaurant5, Set.of(dish13, dish14, dish15));
+    public static final Menu MENU_1 = new Menu(MENU1_ID, LocalDate.of(2021, Month.MARCH, 24), RESTAURANT_1, Set.of(DISH_1, DISH_2, DISH_3));
+    public static final Menu MENU_2 = new Menu(MENU2_ID, LocalDate.of(2021, Month.MARCH, 25), RESTAURANT_2, Set.of(DISH_4, DISH_5, DISH_6));
+    public static final Menu MENU_3 = new Menu(MENU3_ID, LocalDate.of(2021, Month.MARCH, 26), RESTAURANT_3, Set.of(DISH_7, DISH_8, DISH_9));
+    public static final Menu MENU_4 = new Menu(MENU4_ID, LocalDate.of(2021, Month.MARCH, 27), RESTAURANT_4, Set.of(DISH_10, DISH_11, DISH_12));
+    public static final Menu MENU_5 = new Menu(MENU5_ID, LocalDate.of(2021, Month.MARCH, 28), RESTAURANT_5, Set.of(DISH_13, DISH_14, DISH_15));
 
-    public static final List<Menu> menus = List.of(menu1, menu2, menu3, menu4, menu5);
+    public static final List<Menu> MENUS = List.of(MENU_1, MENU_2, MENU_3, MENU_4, MENU_5);
 
     public static Menu getNew() {
-        return new Menu(null, LocalDate.of(2021, Month.APRIL, 14), restaurant3, Set.of(dish5, dish10, dish15));
+        return new Menu(null, LocalDate.of(2021, Month.APRIL, 14), RESTAURANT_3, Set.of(DISH_5, DISH_10, DISH_15));
     }
 
     public static Menu getUpdated() {
-        Menu updated = new Menu(menu1);
+        Menu updated = new Menu(MENU_1);
         updated.setDate(LocalDate.now());
-        updated.setDishes(Set.of(dish11, dish12));
+        updated.setDishes(Set.of(DISH_11, DISH_12));
         return updated;
     }
 

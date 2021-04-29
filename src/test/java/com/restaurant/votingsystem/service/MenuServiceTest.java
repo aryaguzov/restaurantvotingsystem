@@ -31,13 +31,13 @@ class MenuServiceTest extends AbstractServiceTest {
 
     @Test
     public void get() {
-        Menu actual = menuService.get(menu1.getRestaurant().getId(), MENU1_ID);
-        MENU_MATCHER.assertMatch(actual, menu1);
+        Menu actual = menuService.get(MENU_1.getRestaurant().getId(), MENU1_ID);
+        MENU_MATCHER.assertMatch(actual, MENU_1);
     }
 
     @Test
     void getAll() {
-        MENU_MATCHER.assertMatch(menuService.getAll(RESTAURANT1_ID), List.of(menu1));
+        MENU_MATCHER.assertMatch(menuService.getAll(RESTAURANT1_ID), List.of(MENU_1));
     }
 
     @Test
@@ -55,11 +55,11 @@ class MenuServiceTest extends AbstractServiceTest {
     void update() {
         Menu updated = getUpdated();
         menuService.update(updated, updated.getRestaurant().getId());
-        MENU_MATCHER.assertMatch(menuService.get(menu1.getRestaurant().getId(), MENU1_ID), updated);
+        MENU_MATCHER.assertMatch(menuService.get(MENU_1.getRestaurant().getId(), MENU1_ID), updated);
     }
 
     @Test
     void getAllByDate() {
-        assertEquals(menuService.getAllByDate(LocalDate.of(2021, Month.MARCH, 24)), List.of(menu1));
+        assertEquals(menuService.getAllByDate(LocalDate.of(2021, Month.MARCH, 24)), List.of(MENU_1));
     }
 }

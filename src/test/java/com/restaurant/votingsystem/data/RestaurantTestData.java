@@ -15,20 +15,20 @@ public class RestaurantTestData {
     public static final int RESTAURANT5_ID = START_SEQ + 8;
     public static final int NOT_FOUND = 1000000;
 
-    public static final Restaurant restaurant1 = new Restaurant(RESTAURANT1_ID, "BreakingBad", "Los Angeles, USA");
-    public static final Restaurant restaurant2 = new Restaurant(RESTAURANT2_ID, "LuckyPub", "Odessa, Ukraine");
-    public static final Restaurant restaurant3 = new Restaurant(RESTAURANT3_ID, "Consuela", "Paris, France");
-    public static final Restaurant restaurant4 = new Restaurant(RESTAURANT4_ID, "No Time To Die", "Amsterdam, Netherlands");
-    public static final Restaurant restaurant5 = new Restaurant(RESTAURANT5_ID, "Drink Milk", "Kyiv, Ukraine");
+    public static final Restaurant RESTAURANT_1 = new Restaurant(RESTAURANT1_ID, "BreakingBad", "Los Angeles, USA");
+    public static final Restaurant RESTAURANT_2 = new Restaurant(RESTAURANT2_ID, "LuckyPub", "Odessa, Ukraine");
+    public static final Restaurant RESTAURANT_3 = new Restaurant(RESTAURANT3_ID, "Consuela", "Paris, France");
+    public static final Restaurant RESTAURANT_4 = new Restaurant(RESTAURANT4_ID, "No Time To Die", "Amsterdam, Netherlands");
+    public static final Restaurant RESTAURANT_5 = new Restaurant(RESTAURANT5_ID, "Drink Milk", "Kyiv, Ukraine");
 
-    public static final List<Restaurant> restaurants = List.of(restaurant1, restaurant3, restaurant5, restaurant2, restaurant4);
+    public static final List<Restaurant> RESTAURANTS = List.of(RESTAURANT_1, RESTAURANT_3, RESTAURANT_5, RESTAURANT_2, RESTAURANT_4);
 
     public static Restaurant getNew() {
         return new Restaurant(null, "Black Sea", "Odessa, Ukraine");
     }
 
     public static Restaurant getUpdated() {
-        Restaurant updated = new Restaurant(restaurant1);
+        Restaurant updated = new Restaurant(RESTAURANT_1);
         updated.setName("New name");
         updated.setContacts("New contacts");
         return updated;

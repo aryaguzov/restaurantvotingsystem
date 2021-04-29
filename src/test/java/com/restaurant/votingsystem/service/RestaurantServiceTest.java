@@ -41,7 +41,7 @@ public class RestaurantServiceTest extends AbstractServiceTest {
     @Test
     public void get() {
         Restaurant restaurant = restaurantService.get(RESTAURANT2_ID);
-        RESTAURANT_MATCHER.assertMatch(restaurant, restaurant2);
+        RESTAURANT_MATCHER.assertMatch(restaurant, RESTAURANT_2);
     }
 
     @Test
@@ -64,18 +64,18 @@ public class RestaurantServiceTest extends AbstractServiceTest {
 
     @Test
     public void getAll() {
-        RESTAURANT_MATCHER.assertMatch(restaurantService.getAll(), restaurants);
+        RESTAURANT_MATCHER.assertMatch(restaurantService.getAll(), RESTAURANTS);
     }
 
     @Test
     public void getWithMenus() {
         Restaurant actual = restaurantService.getWithMenus(RESTAURANT1_ID);
-        assertEquals(actual, restaurant1);
+        assertEquals(actual, RESTAURANT_1);
     }
 
     @Test
     public void getRestaurantsWithMenus() {
         List<Restaurant> actual = restaurantService.getRestaurantsWithMenus();
-        assertEquals(actual, restaurants);
+        assertEquals(actual, RESTAURANTS);
     }
 }
