@@ -1,4 +1,4 @@
-package com.restaurant.votingsystem;
+package com.restaurant.votingsystem.data;
 
 import java.util.List;
 

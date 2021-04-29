@@ -1,6 +1,6 @@
 package com.restaurant.votingsystem.service;
 
-import com.restaurant.votingsystem.UserTestData;
+import com.restaurant.votingsystem.data.UserTestData;
 import com.restaurant.votingsystem.model.Role;
 import com.restaurant.votingsystem.model.User;
 import com.restaurant.votingsystem.util.exception.NotFoundException;
@@ -11,7 +11,7 @@ import org.springframework.dao.DataAccessException;
 import java.util.Collections;
 import java.util.List;
 
-import static com.restaurant.votingsystem.UserTestData.*;
+import static com.restaurant.votingsystem.data.UserTestData.*;
 import static org.junit.Assert.assertThrows;
 
 public class UserServiceTest extends AbstractServiceTest {
