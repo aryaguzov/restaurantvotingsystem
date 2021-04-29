@@ -74,13 +74,6 @@ public class MenuRestController {
         menuService.update(updated, restId);
     }
 
-    // curl localhost:8081/api/v1/admin/restaurants/menus/{menuId}/dishes -u admin:password
-    @GetMapping(value = "/menus/{menuId}/dishes")
-    public Menu getWithDishes(@PathVariable Integer menuId) {
-        log.info("Getting dishes for the menu with id={}", menuId);
-        return menuService.getWithDishes(menuId);
-    }
-
     // curl 'localhost:8081/api/v1/admin/restaurants/menus?date={date}' -u admin:password
     @GetMapping(value = "/menus")
     public List<Menu> getAllByDate(@RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {

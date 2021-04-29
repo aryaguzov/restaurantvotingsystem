@@ -37,4 +37,8 @@ public class Menu extends AbstractEntity {
         this.restaurant = restaurant;
         this.dishes = dishes;
     }
+
+    public Menu(Menu menu) {
+        this(menu.getId(), menu.getDate(), menu.getRestaurant(), menu.getDishes());
+    }
 }

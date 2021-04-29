@@ -96,10 +96,6 @@ public class MenuService {
         checkNotFoundWithId(save(menu, restId), menu.id());
     }
 
-    public Menu getWithDishes(Integer id) {
-        return checkNotFoundWithId(menuRepository.getWithDishes(id), id);
-    }
-
     public List<Menu> getAllByDate(LocalDate date) {
         return checkNotFound(menuRepository.getAllByDate(date),
                 String.format("date=%s", date.toString()));
