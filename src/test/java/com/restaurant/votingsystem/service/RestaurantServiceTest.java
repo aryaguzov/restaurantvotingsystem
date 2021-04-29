@@ -4,12 +4,14 @@ import com.restaurant.votingsystem.model.Restaurant;
 import com.restaurant.votingsystem.util.exception.NotFoundException;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.dao.DataAccessException;
 
-import static com.restaurant.votingsystem.RestaurantTestData.*;
+import java.util.List;
+
+import static com.restaurant.votingsystem.data.RestaurantTestData.*;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
-@Transactional
 public class RestaurantServiceTest extends AbstractServiceTest {
 
     @Autowired
@@ -48,6 +50,12 @@ public class RestaurantServiceTest extends AbstractServiceTest {
     }
 
     @Test
+    public void duplicateNameCreate() {
+        assertThrows(DataAccessException.class, () ->
+                restaurantService.create(new Restaurant(null, "LuckyPub", "Moscow, Russia")));
+    }
+
+    @Test
     public void update() {
         Restaurant updated = getUpdated();
         restaurantService.update(updated);
@@ -57,5 +65,17 @@ public class RestaurantServiceTest extends AbstractServiceTest {
     @Test
     public void getAll() {
         RESTAURANT_MATCHER.assertMatch(restaurantService.getAll(), restaurants);
+    }
+
+    @Test
+    public void getWithMenus() {
+        Restaurant actual = restaurantService.getWithMenus(RESTAURANT1_ID);
+        assertEquals(actual, restaurant1);
+    }
+
+    @Test
+    public void getRestaurantsWithMenus() {
+        List<Restaurant> actual = restaurantService.getRestaurantsWithMenus();
+        assertEquals(actual, restaurants);
     }
 }

@@ -1,9 +1,10 @@
-package com.restaurant.votingsystem;
+package com.restaurant.votingsystem.data;
 
 import com.restaurant.votingsystem.model.Restaurant;
 
 import java.util.List;
 
+import static com.restaurant.votingsystem.data.MenuTestData.*;
 import static com.restaurant.votingsystem.model.AbstractEntity.START_SEQ;
 
 public class RestaurantTestData {
@@ -15,11 +16,11 @@ public class RestaurantTestData {
     public static final int RESTAURANT5_ID = START_SEQ + 8;
     public static final int NOT_FOUND = 1000000;
 
-    public static final Restaurant restaurant1 = new Restaurant(RESTAURANT1_ID, "BreakingBad", "Los Angeles, USA");
-    public static final Restaurant restaurant2 = new Restaurant(RESTAURANT2_ID, "LuckyPub", "Odessa, Ukraine");
-    public static final Restaurant restaurant3 = new Restaurant(RESTAURANT3_ID, "Consuela", "Paris, France");
-    public static final Restaurant restaurant4 = new Restaurant(RESTAURANT4_ID, "No Time To Die", "Amsterdam, Netherlands");
-    public static final Restaurant restaurant5 = new Restaurant(RESTAURANT5_ID, "Drink Milk", "Kyiv, Ukraine");
+    public static final Restaurant restaurant1 = new Restaurant(RESTAURANT1_ID, "BreakingBad", "Los Angeles, USA", List.of(menu1));
+    public static final Restaurant restaurant2 = new Restaurant(RESTAURANT2_ID, "LuckyPub", "Odessa, Ukraine", List.of(menu2));
+    public static final Restaurant restaurant3 = new Restaurant(RESTAURANT3_ID, "Consuela", "Paris, France", List.of(menu3));
+    public static final Restaurant restaurant4 = new Restaurant(RESTAURANT4_ID, "No Time To Die", "Amsterdam, Netherlands", List.of(menu4));
+    public static final Restaurant restaurant5 = new Restaurant(RESTAURANT5_ID, "Drink Milk", "Kyiv, Ukraine", List.of(menu5));
 
     public static final List<Restaurant> restaurants = List.of(restaurant1, restaurant3, restaurant5, restaurant2, restaurant4);
 
