@@ -11,18 +11,18 @@ import java.time.Month;
 import java.util.List;
 
 import static com.restaurant.votingsystem.data.MenuTestData.*;
-import static com.restaurant.votingsystem.data.RestaurantTestData.RESTAURANT1_ID;
-import static com.restaurant.votingsystem.data.RestaurantTestData.RESTAURANT3_ID;
+import static com.restaurant.votingsystem.data.MenuTestData.NOT_FOUND;
+import static com.restaurant.votingsystem.data.RestaurantTestData.*;
 import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class MenuServiceTest extends AbstractServiceTest {
 
     @Autowired
-    MenuService menuService;
+    private MenuService menuService;
 
     @Test
-    public void create() {
+    void create() {
         Menu newMenu = MenuTestData.getNew();
         Menu created = menuService.create(MenuTestData.getNew(), RESTAURANT3_ID);
         newMenu.setId(created.id());
@@ -30,14 +30,19 @@ class MenuServiceTest extends AbstractServiceTest {
     }
 
     @Test
-    public void get() {
+    void get() {
         Menu actual = menuService.get(MENU_1.getRestaurant().getId(), MENU1_ID);
-        MENU_MATCHER.assertMatch(actual, MENU_1);
+        assertEquals(actual, MENU_1);
+    }
+
+    @Test
+    void getNotFound() {
+        assertThrows(NotFoundException.class, () -> menuService.get(MENU_1.getRestaurant().getId(), NOT_FOUND));
     }
 
     @Test
     void getAll() {
-        MENU_MATCHER.assertMatch(menuService.getAll(RESTAURANT1_ID), List.of(MENU_1));
+        assertEquals(menuService.getAll(RESTAURANT1_ID), List.of(MENU_1));
     }
 
     @Test
@@ -53,9 +58,9 @@ class MenuServiceTest extends AbstractServiceTest {
 
     @Test
     void update() {
-        Menu updated = getUpdated();
+        Menu updated = MenuTestData.getUpdated();
         menuService.update(updated, updated.getRestaurant().getId());
-        MENU_MATCHER.assertMatch(menuService.get(MENU_1.getRestaurant().getId(), MENU1_ID), updated);
+        assertEquals(menuService.get(MENU_1.getRestaurant().getId(), MENU1_ID), updated);
     }
 
     @Test

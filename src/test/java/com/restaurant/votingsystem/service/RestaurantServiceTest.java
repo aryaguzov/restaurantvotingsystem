@@ -15,16 +15,14 @@ import static org.junit.Assert.assertThrows;
 public class RestaurantServiceTest extends AbstractServiceTest {
 
     @Autowired
-    RestaurantService restaurantService;
+    private RestaurantService restaurantService;
 
     @Test
     public void create() {
-        Restaurant created = restaurantService.create(getNew());
-        int newId = created.id();
         Restaurant newRestaurant = getNew();
-        newRestaurant.setId(newId);
-        RESTAURANT_MATCHER.assertMatch(created, newRestaurant);
-        RESTAURANT_MATCHER.assertMatch(restaurantService.get(newId), newRestaurant);
+        Restaurant created = restaurantService.create(getNew());
+        newRestaurant.setId(created.id());
+        assertEquals(created, newRestaurant);
     }
 
     @Test
@@ -41,7 +39,7 @@ public class RestaurantServiceTest extends AbstractServiceTest {
     @Test
     public void get() {
         Restaurant restaurant = restaurantService.get(RESTAURANT2_ID);
-        RESTAURANT_MATCHER.assertMatch(restaurant, RESTAURANT_2);
+        assertEquals(restaurant, RESTAURANT_2);
     }
 
     @Test
@@ -59,12 +57,12 @@ public class RestaurantServiceTest extends AbstractServiceTest {
     public void update() {
         Restaurant updated = getUpdated();
         restaurantService.update(updated);
-        RESTAURANT_MATCHER.assertMatch(restaurantService.get(RESTAURANT1_ID), getUpdated());
+        assertEquals(restaurantService.get(RESTAURANT1_ID), getUpdated());
     }
 
     @Test
     public void getAll() {
-        RESTAURANT_MATCHER.assertMatch(restaurantService.getAll(), RESTAURANTS);
+        assertEquals(restaurantService.getAll(), RESTAURANTS);
     }
 
     @Test

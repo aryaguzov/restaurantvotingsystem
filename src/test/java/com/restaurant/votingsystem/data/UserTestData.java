@@ -8,7 +8,6 @@ import java.util.Collections;
 import static com.restaurant.votingsystem.model.AbstractEntity.START_SEQ;
 
 public class UserTestData {
-    public static final TestMatcher<User> USER_MATCHER = TestMatcher.usingIgnoringFieldsComparator("roles", "password");
     public static final int USER_ID = START_SEQ;
     public static final int ADMIN_ID = START_SEQ + 1;
     public static final int USER1_ID = START_SEQ + 2;

@@ -12,21 +12,20 @@ import java.util.Collections;
 import java.util.List;
 
 import static com.restaurant.votingsystem.data.UserTestData.*;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
 public class UserServiceTest extends AbstractServiceTest {
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @Test
     public void create() {
-        User created = userService.create(getNew());
-        int newId = created.id();
         User newUser = getNew();
-        newUser.setId(newId);
-        USER_MATCHER.assertMatch(created, newUser);
-        USER_MATCHER.assertMatch(userService.get(newId), newUser);
+        User created = userService.create(getNew());
+        newUser.setId(created.id());
+        assertEquals(created, newUser);
     }
 
     @Test
@@ -43,7 +42,7 @@ public class UserServiceTest extends AbstractServiceTest {
     @Test
     public void get() {
         User user = userService.get(USER_ID);
-        USER_MATCHER.assertMatch(user, UserTestData.USER);
+        assertEquals(user, UserTestData.USER);
     }
 
     @Test
@@ -53,8 +52,8 @@ public class UserServiceTest extends AbstractServiceTest {
 
     @Test
     public void getByEmail() {
-        User user = userService.getByEmail("user@gmail.com");
-        USER_MATCHER.assertMatch(user, USER);
+        User actual = userService.getByEmail("user@gmail.com");
+        assertEquals(actual, USER);
     }
 
     @Test
@@ -65,20 +64,20 @@ public class UserServiceTest extends AbstractServiceTest {
 
     @Test
     public void getByName() {
-        User user = userService.getByName("user");
-        USER_MATCHER.assertMatch(user, USER);
+        User actual = userService.getByName("user");
+        assertEquals(actual, USER);
     }
 
     @Test
     public void update() {
         User updated = getUpdated();
         userService.update(updated);
-        USER_MATCHER.assertMatch(userService.get(USER_ID), getUpdated());
+        assertEquals(userService.get(USER_ID), getUpdated());
     }
 
     @Test
     public void getAll() {
         List<User> all = userService.getAll();
-        USER_MATCHER.assertMatch(all, USER, ADMIN, USER1, USER2);
+        assertEquals(all, List.of(USER, ADMIN, USER1, USER2));
     }
 }

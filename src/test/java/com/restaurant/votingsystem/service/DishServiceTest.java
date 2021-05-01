@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class DishServiceTest extends AbstractServiceTest {
 
     @Autowired
-    DishService dishService;
+    private DishService dishService;
 
     @Test
     void create() {
@@ -39,19 +39,24 @@ class DishServiceTest extends AbstractServiceTest {
     @Test
     void get() {
         Dish actual = dishService.get(DISH1_ID, MENU1_ID);
-        DISH_MATCHER.assertMatch(actual, DISH_1);
+        assertEquals(actual, DISH_1);
+    }
+
+    @Test
+    void getNotFound() {
+        assertThrows(NotFoundException.class, () -> dishService.get(NOT_FOUND, MENU1_ID));
     }
 
     @Test
     void update() {
         Dish updated = getUpdated();
         dishService.update(updated, MENU1_ID);
-        DISH_MATCHER.assertMatch(dishService.get(DISH1_ID, MENU1_ID), updated);
+        assertEquals(dishService.get(DISH1_ID, MENU1_ID), updated);
     }
 
     @Test
     void getAll() {
         List<Dish> actual = dishService.getAll(MENU1_ID);
-        DISH_MATCHER.assertMatch(actual, List.of(DISH_1, DISH_2, DISH_3));
+        assertEquals(actual, List.of(DISH_1, DISH_2, DISH_3));
     }
 }
