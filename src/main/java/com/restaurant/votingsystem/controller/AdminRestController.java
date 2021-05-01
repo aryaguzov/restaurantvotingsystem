@@ -57,6 +57,12 @@ public class AdminRestController {
         return userService.getByName(name);
     }
 
+    @GetMapping("/with")
+    public User getByEmail(@RequestParam("email") String email) {
+        log.info("Getting the user with email={}", email);
+        return userService.getByEmail(email);
+    }
+
     // curl -X POST localhost:8081/api/v1/admin/users -H 'Content-type:application/json' -d '{"name":"{name}","email":"{email}","password":"{password}","roles":["USER"]}' -u admin:password
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<User> create(@RequestBody User user) {
