@@ -37,4 +37,8 @@ public class Vote extends AbstractEntity {
         this.user = user;
         this.restaurant = restaurant;
     }
+
+    public Vote(Vote vote) {
+        this(vote.getId(), vote.getDate(), vote.getUser(), vote.getRestaurant());
+    }
 }
