@@ -1,6 +1,7 @@
 package com.restaurant.votingsystem.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -15,6 +16,7 @@ import java.util.Set;
 @Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = "email", name = "unique_email_idx")})
 @Setter
 @Getter
+@EqualsAndHashCode
 @ToString(callSuper = true, exclude = {"password"})
 public class User extends AbstractNamedEntity {
 

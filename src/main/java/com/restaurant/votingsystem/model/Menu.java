@@ -1,5 +1,6 @@
 package com.restaurant.votingsystem.model;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -13,6 +14,7 @@ import java.util.Set;
 @Setter
 @Entity
 @Table(name = "menus", uniqueConstraints = {@UniqueConstraint(columnNames = {"rest_id", "date"}, name = "rest_date_idx")})
+@EqualsAndHashCode
 @ToString(callSuper = true)
 public class Menu extends AbstractEntity {
 
