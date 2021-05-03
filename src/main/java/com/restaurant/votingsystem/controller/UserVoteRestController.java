@@ -8,15 +8,16 @@ import com.restaurant.votingsystem.service.VoteService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
 import java.time.LocalDate;
 import java.util.List;
+
+import static com.restaurant.votingsystem.util.ValidationUtil.assureIdConsistent;
 
 @Slf4j
 @RestController
@@ -47,15 +48,20 @@ public class UserVoteRestController {
         return voteService.getAllByDate(date);
     }
 
-    // curl -X POST localhost:8081/api/v1/restaurants/10005/votes -H 'Content-type:application/json' -d '{"users":[{"id":10000}],"restaurants:[{"id":10005}]}' -u user:password
+    // curl -X POST localhost:8081/api/v1/restaurants/10005/votes -H 'Content-type:application/json' -u user:password
     @PostMapping(value = "/restaurants/{restId}/votes", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Vote> create(@PathVariable Integer restId, @AuthenticationPrincipal AuthorizedUser authUser) {
         Vote vote = new Vote(null, LocalDate.now(), null, null);
         log.info("Creating a new vote={}", vote);
         Vote created = voteService.create(vote, authUser.getId(), restId);
-        URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path(REST_URL + "restaurants/{restId}/votes/{voteId}")
-                .buildAndExpand(restId, created.getId()).toUri();
-        return ResponseEntity.created(uriOfNewResource).body(created);
+        return new ResponseEntity<>(created, HttpStatus.CREATED);
+    }
+
+    // curl -X PUT localhost:8081/api/v1/restaurants/{restId}/votes/{id} -H 'Content-type:application/json' -d '{"date":"2021-05-03","restaurant":[{"id":10006}]}' -u user:password
+    @PutMapping(value = "restaurants/{restId}/votes/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void update(@RequestBody Vote updated, @PathVariable Integer restId, @PathVariable Integer id) {
+        log.info("Updating the vote={} with id={}", updated, id);
+        assureIdConsistent(updated, id);
+        voteService.update(updated, updated.getUser().getId(), restId);
     }
 }

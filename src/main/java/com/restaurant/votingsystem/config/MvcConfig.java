@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /*
- * Managing an issue with Hibernate LazyInitializationException
+ * Handling an issue with Hibernate LazyInitializationException
  *
  * @link https://stackoverflow.com/a/21760361/15020481
  * */
@@ -28,25 +28,26 @@ import java.util.List;
 @Configuration
 @EnableWebMvc
 public class MvcConfig implements WebMvcConfigurer {
+
+    private static final ObjectMapper MAPPER = new ObjectMapper();
+
     public MappingJackson2HttpMessageConverter jacksonMessageConverter() {
         MappingJackson2HttpMessageConverter messageConverter = new MappingJackson2HttpMessageConverter();
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule(new Hibernate5Module());
-        mapper.registerModule(new JavaTimeModule());
-        mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
-        mapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.NONE);
-        mapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-        mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-        mapper.setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
+        MAPPER.registerModule(new Hibernate5Module());
+        MAPPER.registerModule(new JavaTimeModule());
+        MAPPER.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+        MAPPER.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.NONE);
+        MAPPER.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+        MAPPER.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        MAPPER.setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
 
         List<MediaType> supportedMediaTypes = new ArrayList<>();
         supportedMediaTypes.add(new MediaType("application", "json", Charset.forName("UTF-8")));
         supportedMediaTypes.add(MediaType.APPLICATION_JSON);
         supportedMediaTypes.add(MediaType.APPLICATION_FORM_URLENCODED);
         messageConverter.setSupportedMediaTypes(supportedMediaTypes);
-        messageConverter.setObjectMapper(mapper);
+        messageConverter.setObjectMapper(MAPPER);
         return messageConverter;
-
     }
 
     @Override
@@ -55,4 +56,7 @@ public class MvcConfig implements WebMvcConfigurer {
         WebMvcConfigurer.super.configureMessageConverters(converters);
     }
 
+    public static ObjectMapper getMapper() {
+        return MAPPER;
+    }
 }

@@ -30,7 +30,7 @@ public class MenuTestData {
 
     public static Menu getUpdated() {
         Menu updated = new Menu(MENU_1);
-        updated.setDate(LocalDate.now());
+        updated.setDate(LocalDate.of(2021, Month.APRIL, 20));
         updated.setDishes(Set.of(DISH_11, DISH_12));
         return updated;
     }

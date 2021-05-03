@@ -58,7 +58,8 @@ public class VoteService {
     public Vote update(Vote vote, Integer userId, Integer restId) {
         Objects.requireNonNull(vote, "Vote must not be null.");
         Vote existingVote = getByUserAndDate(userId, vote.getDate());
-        if (existingVote == null && LocalTime.now().isBefore(LocalTime.of(11, 0))) {
+        Objects.requireNonNull(existingVote, "Existing vote must not be null.");
+        if (LocalTime.now().isAfter(LocalTime.of(11, 0))) {
             throw new TimeOverException("Sorry, too late to change your mind.");
         }
         return save(existingVote, userId, restId);

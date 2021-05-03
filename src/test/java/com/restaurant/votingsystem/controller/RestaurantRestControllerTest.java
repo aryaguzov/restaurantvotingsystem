@@ -1,5 +1,6 @@
 package com.restaurant.votingsystem.controller;
 
+import com.restaurant.votingsystem.controller.json.JsonUtil;
 import com.restaurant.votingsystem.model.Restaurant;
 import com.restaurant.votingsystem.service.RestaurantService;
 import com.restaurant.votingsystem.util.exception.NotFoundException;
@@ -83,7 +84,7 @@ class RestaurantRestControllerTest extends AbstractRestControllerTest {
         perform(MockMvcRequestBuilders.post(REST_URL)
                 .with(userHttpBasic(ADMIN))
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content("{\"name\":\"Black Sea\",\"contacts\":\"Odessa, Ukraine\"})"))
+                .content(JsonUtil.writeValue(newRestaurant)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.name", is(newRestaurant.getName())))
                 .andExpect(jsonPath("$.contacts", is(newRestaurant.getContacts())))
@@ -97,7 +98,7 @@ class RestaurantRestControllerTest extends AbstractRestControllerTest {
         perform(MockMvcRequestBuilders.put(REST_URL + RESTAURANT3_ID)
                 .with(userHttpBasic(ADMIN))
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content("{\"name\":\"New name\",\"contacts\":\"New contacts\"})"))
+                .content(JsonUtil.writeValue(updated)))
                 .andExpect(status().isNoContent())
                 .andDo(print());
 

@@ -1,4 +1,4 @@
-package com.restaurant.votingsystem.controller;
+package com.restaurant.votingsystem.controller.user;
 
 import com.restaurant.votingsystem.AuthorizedUser;
 import com.restaurant.votingsystem.model.User;
