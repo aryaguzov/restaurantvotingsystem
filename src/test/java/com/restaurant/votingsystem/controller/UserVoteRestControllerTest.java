@@ -10,14 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import java.time.LocalDate;
-import java.time.Month;
-
 import static com.restaurant.votingsystem.TestUtil.userHttpBasic;
 import static com.restaurant.votingsystem.data.RestaurantTestData.RESTAURANT1_ID;
 import static com.restaurant.votingsystem.data.RestaurantTestData.RESTAURANT3_ID;
 import static com.restaurant.votingsystem.data.UserTestData.USER;
-import static com.restaurant.votingsystem.data.UserTestData.USER_ID;
 import static com.restaurant.votingsystem.data.VoteTestData.VOTE1_ID;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -65,7 +61,7 @@ class UserVoteRestControllerTest extends AbstractRestControllerTest {
 
     @Test
     void update() throws Exception {
-        Vote updated = voteService.getByUserAndDate(USER_ID, LocalDate.of(2021, Month.MARCH, 25));
+        Vote updated = VoteTestData.getUpdated();
         perform(MockMvcRequestBuilders.put(REST_URL + "restaurants/" + RESTAURANT3_ID + "/votes/" + VOTE1_ID)
                 .with(userHttpBasic(USER))
                 .contentType(MediaType.APPLICATION_JSON_VALUE)

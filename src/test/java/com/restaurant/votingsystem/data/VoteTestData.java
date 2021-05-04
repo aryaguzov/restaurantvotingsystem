@@ -24,4 +24,12 @@ public class VoteTestData {
     public static Vote getNew() {
         return new Vote(null, LocalDate.now(), USER, RESTAURANT_1);
     }
+
+    public static Vote getUpdated() {
+        Vote updated = new Vote(VOTE_1);
+        updated.setDate(LocalDate.of(2021, Month.MARCH, 25));
+        updated.setUser(USER);
+        updated.setRestaurant(RESTAURANT_3);
+        return updated;
+    }
 }
