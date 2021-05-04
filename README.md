@@ -10,7 +10,7 @@ The main idea is to create a voting system for deciding where to have lunch at.
 * User can update its vote before 11:00
 # Technological stack
 * Java 15
-* SpringBoot
+* Spring Boot
 * Spring Data
 * Spring Security
 * H2 Database
