@@ -78,8 +78,7 @@ public class VoteService {
         return voteRepository.getByUserAndDate(userId, date);
     }
 
-    @Transactional
-    public Vote save(Vote vote, Integer userId, Integer restId) {
+    private Vote save(Vote vote, Integer userId, Integer restId) {
         if (!vote.isNew() && get(vote.id()) == null) {
             return null;
         }

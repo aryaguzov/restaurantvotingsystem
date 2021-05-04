@@ -101,8 +101,7 @@ public class MenuService {
                 String.format("date=%s", date.toString()));
     }
 
-    @Transactional
-    public Menu save(Menu menu, Integer restId) {
+    private Menu save(Menu menu, Integer restId) {
         if (!menu.isNew() && get(restId, menu.getId()) == null) {
             return null;
         }

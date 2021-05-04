@@ -66,8 +66,7 @@ public class DishService {
         return dishRepository.getAll(menuId);
     }
 
-    @Transactional
-    public Dish save(Dish dish, Integer menuId) {
+    private Dish save(Dish dish, Integer menuId) {
         if (!dish.isNew() && get(dish.getId(), menuId) == null) {
             return null;
         }
