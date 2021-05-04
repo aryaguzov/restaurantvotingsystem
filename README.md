@@ -15,6 +15,7 @@ The main idea is to create a voting system for deciding where to have lunch at.
 * Spring Security
 * H2 Database
 * Hibernate
+* Maven
 * Lombok
 * JUnit
 # cURL commands for testing REST API
