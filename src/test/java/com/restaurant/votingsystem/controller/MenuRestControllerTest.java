@@ -16,6 +16,7 @@ import static com.restaurant.votingsystem.data.RestaurantTestData.RESTAURANT3_ID
 import static com.restaurant.votingsystem.data.UserTestData.ADMIN;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -91,10 +92,9 @@ class MenuRestControllerTest extends AbstractRestControllerTest {
     }
 
 
-    /*@Test
+    @Test
     void update() throws Exception {
         Menu updated = getUpdated();
-        updated.setId(null);
         perform(MockMvcRequestBuilders.put(REST_URL + RESTAURANT1_ID + "/menus/" + MENU1_ID)
                 .with(userHttpBasic(ADMIN))
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -103,7 +103,7 @@ class MenuRestControllerTest extends AbstractRestControllerTest {
                 .andDo(print());
 
         assertEquals(menuService.get(RESTAURANT1_ID, MENU1_ID), updated);
-    }*/
+    }
 
     @Test
     void getAllByDate() throws Exception {

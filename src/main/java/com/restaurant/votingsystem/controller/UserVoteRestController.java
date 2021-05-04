@@ -43,7 +43,7 @@ public class UserVoteRestController {
 
     // curl 'localhost:8081/api/v1/votes/by?date={date}' -u user:password
     @GetMapping(path = "/votes/by")
-    public List<Vote> getVotesByDay(@RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+    public List<Vote> getVotesByDate(@RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         log.info(("Getting all votes by date={}"), date);
         return voteService.getAllByDate(date);
     }
