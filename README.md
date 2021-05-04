@@ -56,15 +56,25 @@ The main idea is to create a voting system for deciding where to have lunch at.
 ### Note: only an authorized user has access to the following resource.
 * ####  GET api/v1/restaurants - return a list of all restaurants with its menu
        * curl localhost:8081/api/v1/restaurants -u user:password
-## Menu
+## Menus
 ### Note: only an admin has access to the following resources.
 * ####  GET api/v1/admin/restaurants/{id}/menus - return a list of all menus for a restaurant
        * curl localhost:8081/api/v1/admin/restaurants/10005/menus -u admin:password
-* ####  GET api/v1/admin/restaurants/{id}/menus/{id} - return a menu with id for a restaurant
-       * curl localhost:8081/api/v1/admin/restaurants/10005/menus/10010 -u admin:password
+* ####  GET api/v1/admin/restaurants/menus?date={date} - return a list of menus for the date
+       * curl 'localhost:8081/api/v1/admin/restaurants/menus?date=2021-03-24' -u admin:password
+* ####  GET api/v1/admin/restaurants/{id}/menus - return a list of all menus for a restaurant
+       * curl localhost:8081/api/v1/admin/restaurants/10005/menus -u admin:password
 * ####  DELETE api/v1/admin/restaurants/{id}/menus/{id} - delete a menu with id
        * curl -X DELETE localhost:8081/api/v1/admin/restaurants/10005/menus/10010 -u admin:password
 * ####  POST api/v1/admin/restaurants/{id}/menus - create a menu
        * curl -X POST localhost:8081/api/v1/admin/restaurants/10005/menus -H 'Content-type:application/json' -d '{"date":"2021-03-03","dishes":[{"name": "Pizza","price": 100},{"name": "Bread","price": 10}]}' -u admin:password
 * ####  PUT api/v1/admin/restaurants/{id}/menus/{id} - update a menu
        * curl -X PUT localhost:8081/api/v1/admin/restaurants/10006/menus/10011 -H 'Content-type:application/json' -d '{"date":"2021-04-04","dishes":[{"name": "NewPizza","price": 1100},{"name": "NewBread","price": 100}]}' -u admin:password
+## Vote
+### Note: only an authorized user has access to the following resources.
+* ####  GET api/v1/votes/by?date={date} - return a list of votes for the date
+       * curl 'localhost:8081/api/v1/votes/by?date=2021-03-25' -u user:password
+* ####  POST api/v1/restaurants/{id}/votes - create a vote
+       * curl -X POST localhost:8081/api/v1/restaurants/10005/votes -H 'Content-type:application/json' -u user:password
+* ####  PUT api/v1/restaurants/{id}/votes/{id} - update a vote
+       * curl -X PUT localhost:8081/api/v1/restaurants/10007/votes/10031 -H 'Content-type:application/json' -d '{"date":"2021-03-27","userId":10002}' -u user:password
