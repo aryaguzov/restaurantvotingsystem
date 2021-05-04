@@ -23,13 +23,13 @@ The main idea is to create a voting system for deciding where to have lunch at.
 * ####  GET api/v1/admin/users - return a list of all users
        * curl localhost:8081/api/v1/admin/users -u admin:password
 * ####  GET api/v1/admin/users/{id} - return a user with id
-       * curl localhost:8081/api/v1/admin/10000 -u admin:password
+       * curl localhost:8081/api/v1/admin/users/10000 -u admin:password
 * ####  GET api/v1/admin/users/by?name={name} - get a user with the name
        * curl 'localhost:8081/api/v1/admin/users/by?name=admin' -u admin:password
 * ####  GET api/v1/admin/users/with?email={email} - get a user with the email
        * curl 'localhost:8081/api/v1/admin/users/with?email=user@gmail.com' -u admin:password
 * ####  DELETE api/v1/admin/users/{id} - delete a user with id
-       * curl -X DELETE localhost:8081/api/v1/admin/10000 -u admin:password
+       * curl -X DELETE localhost:8081/api/v1/admin/users/10000 -u admin:password
 * ####  POST api/v1/admin/users/ - create a user
        * curl -X POST localhost:8081/api/v1/admin/users -H 'Content-type:application/json' -d '{"name":"userName","email":"username@email.com","password":"password","roles":["USER"]}' -u admin:password
 * ####  PUT api/v1/admin/users/{id} - update a user
@@ -41,3 +41,15 @@ The main idea is to create a voting system for deciding where to have lunch at.
        * curl -X DELETE localhost:8081/api/v1/profile -u user:password
 * ####  PUT api/v1/profile - update an authorized user
        * curl -X PUT localhost:8081/api/v1/profile -H 'Content-type:application/json' -d '{"name":"newName","email":"newemail@gmail.com","password":"newPassword","roles":["USER"]}' -u user:password
+## Restaurants
+### Note: only an admin has access to the following resources.
+* ####  GET api/v1/admin/restaurants - return a list of all restaurants
+       * curl localhost:8081/api/v1/admin/restaurants -u admin:password
+* ####  GET api/v1/admin/restaurants/{id} - return a restaurant with id
+       * curl localhost:8081/api/v1/admin/restaurants/10005 -u admin:password
+* ####  DELETE api/v1/admin/restaurants/{id} - delete a restaurant with id
+       * curl -X DELETE localhost:8081/api/v1/admin/restaurants/10005 -u admin:password
+* ####  POST api/v1/admin/restaurants/ - create a restaurant
+       * curl -X POST localhost:8081/api/v1/admin/restaurants -H 'Content-type:application/json' -d '{"name":"name","contacts":"contacts"}' -u admin:password
+* ####  PUT api/v1/admin/restaurants/{id} - update a restaurant
+       * curl -X PUT localhost:8081/api/v1/admin/restaurants/10006 -H 'Content-type:application/json' -d '{"name":"newName","contacts":"newContacts"}' -u admin:password
