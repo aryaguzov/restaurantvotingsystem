@@ -33,4 +33,11 @@ The main idea is to create a voting system for deciding where to have lunch at.
 * ####  POST api/v1/admin/users/ - create a user
        * curl -X POST localhost:8081/api/v1/admin/users -H 'Content-type:application/json' -d '{"name":"userName","email":"username@email.com","password":"password","roles":["USER"]}' -u admin:password
 * ####  PUT api/v1/admin/users/{id} - update a user
-       * curl -X PUT localhost:8081/api/v1/admin/users/10001 -H 'Content-type:application/json' -d '{"name":"newName","email":"newemail@gmail.com","password":"newPassword","roles":["USER"]}' -u admin:password   
+       * curl -X PUT localhost:8081/api/v1/admin/users/10002 -H 'Content-type:application/json' -d '{"name":"newName","email":"newemail@gmail.com","password":"newPassword","roles":["USER"]}' -u admin:password
+### Note: only an authorized user has access to the following resources.
+* ####  GET api/v1/profile - return an authorized user
+       * curl localhost:8081/api/v1/profile -u user:password   
+* ####  DELETE api/v1/profile - delete an authorized user
+       * curl -X DELETE localhost:8081/api/v1/profile -u user:password
+* ####  PUT api/v1/profile - update an authorized user
+       * curl -X PUT localhost:8081/api/v1/profile -H 'Content-type:application/json' -d '{"name":"newName","email":"newemail@gmail.com","password":"newPassword","roles":["USER"]}' -u user:password
