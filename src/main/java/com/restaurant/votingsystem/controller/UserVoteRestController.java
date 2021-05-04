@@ -57,7 +57,7 @@ public class UserVoteRestController {
         return new ResponseEntity<>(created, HttpStatus.CREATED);
     }
 
-    // curl -X PUT localhost:8081/api/v1/restaurants/{restId}/votes/{id} -H 'Content-type:application/json' -d '{"date":"2021-05-03","restaurant":[{"id":10006}]}' -u user:password
+    // curl -X PUT localhost:8081/api/v1/restaurants/{newRestaurant}/votes/{voteId} -H 'Content-type:application/json' -d '{"date":"2021-05-04","userId":10000}' -u user:password
     @PutMapping(value = "restaurants/{restId}/votes/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void update(@RequestBody Vote updated, @PathVariable Integer restId, @PathVariable Integer id) {
         log.info("Updating the vote={} with id={}", updated, id);
