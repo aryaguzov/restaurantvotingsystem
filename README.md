@@ -3,18 +3,18 @@
 ## Idea
 The main idea is to create a voting system for deciding where to have lunch at. 
 ## How it works
-* Admin adds a restaurant and its lunch menu of the day;
-* Admin changes a menu for each restaurant every day;
-* User can look at all restaurants and its lunch menu of the day;
-* User can vote for a chosen restaurant before 11:00;
-* User can update its vote before 11:00.
+* Admin adds a restaurant and its lunch menu of the day
+* Admin changes a menu for each restaurant every day
+* User can look at all restaurants and its lunch menu of the day
+* User can vote for a chosen restaurant before 11:00
+* User can update its vote before 11:00
 ## Technological stack
-* Java 15;
-* SpringBoot;
-* Spring Data;
-* Spring Security;
-* H2 Database;
-* Hibernate;
-* Lombok;
-* JUnit.
+* Java 15
+* SpringBoot
+* Spring Data
+* Spring Security
+* H2 Database
+* Hibernate
+* Lombok
+* JUnit
 ## cURL commands for testing
