@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -50,7 +51,7 @@ public class UserVoteRestController {
 
     // curl -X POST localhost:8081/api/v1/restaurants/10005/votes -H 'Content-type:application/json' -u user:password
     @PostMapping(value = "/restaurants/{restId}/votes", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Vote> create(@PathVariable Integer restId, @AuthenticationPrincipal AuthorizedUser authUser) {
+    public ResponseEntity<Vote> create(@Valid @PathVariable Integer restId, @AuthenticationPrincipal AuthorizedUser authUser) {
         Vote vote = new Vote(null, LocalDate.now(), null, null);
         log.info("Creating a new vote={}", vote);
         Vote created = voteService.create(vote, authUser.getId(), restId);
@@ -59,7 +60,7 @@ public class UserVoteRestController {
 
     // curl -X PUT localhost:8081/api/v1/restaurants/{newRestaurant}/votes/{voteId} -H 'Content-type:application/json' -d '{"date":"2021-05-04","userId":10000}' -u user:password
     @PutMapping(value = "restaurants/{restId}/votes/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void update(@RequestBody Vote updated, @PathVariable Integer restId, @PathVariable Integer id) {
+    public void update(@Valid @RequestBody Vote updated, @PathVariable Integer restId, @PathVariable Integer id) {
         log.info("Updating the vote={} with id={}", updated, id);
         assureIdConsistent(updated, id);
         voteService.update(updated, updated.getUser().getId(), restId);

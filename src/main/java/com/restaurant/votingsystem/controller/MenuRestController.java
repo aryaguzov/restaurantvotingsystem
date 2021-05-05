@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.time.LocalDate;
 import java.util.List;
@@ -55,7 +56,7 @@ public class MenuRestController {
 
     // curl -X POST localhost:8081/api/v1/admin/restaurants/{restId}/menus -H 'Content-type:application/json' -d '{"date":"2021-03-03","dishes":[{"name": "Pizza","price": 100},{"name": "Bread","price": 10}]}' -u admin:password
     @PostMapping(value = "/{restId}/menus", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Menu> create(@RequestBody Menu menu, @PathVariable Integer restId) {
+    public ResponseEntity<Menu> create(@Valid @RequestBody Menu menu, @PathVariable Integer restId) {
         log.info("Creating menu={} for the restaurant with id={}", menu, restId);
         checkNew(menu);
         Menu created = menuService.create(menu, restId);
@@ -68,7 +69,7 @@ public class MenuRestController {
     // curl -X PUT localhost:8081/api/v1/admin/restaurants/{restId}/menus/{menuId} -H 'Content-type:application/json' -d '{"date":"2021-04-04","dishes":[{"name": "NewPizza","price": 1100},{"name": "NewBread","price": 100}]}' -u admin:password
     @PutMapping(value = "/{restId}/menus/{menuId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@RequestBody Menu updated, @PathVariable Integer restId, @PathVariable Integer menuId) {
+    public void update(@Valid @RequestBody Menu updated, @PathVariable Integer restId, @PathVariable Integer menuId) {
         log.info("Updating the menu={} with id={} for the restaurant with id={}", updated, menuId, restId);
         assureIdConsistent(updated, menuId);
         menuService.update(updated, restId);
