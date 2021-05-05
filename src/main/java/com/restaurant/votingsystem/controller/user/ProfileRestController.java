@@ -9,8 +9,6 @@ import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-
 import static com.restaurant.votingsystem.util.ValidationUtil.assureIdConsistent;
 
 
@@ -42,7 +40,7 @@ public class ProfileRestController {
 
     // curl -X PUT localhost:8081/api/v1/profile -H 'Content-type:application/json' -d '{"name":"newName","email":"newEmail@gmail.com","password":"newPassword","roles":["USER"]}' -u user:password
     @PutMapping
-    public void update(@Valid @RequestBody User updated, @AuthenticationPrincipal AuthorizedUser authorizedUser) {
+    public void update(@RequestBody User updated, @AuthenticationPrincipal AuthorizedUser authorizedUser) {
         assureIdConsistent(updated, authorizedUser.getId());
         log.info("Updating the user={} with id={}", updated, authorizedUser.getId());
         updated.setId(authorizedUser.getId());

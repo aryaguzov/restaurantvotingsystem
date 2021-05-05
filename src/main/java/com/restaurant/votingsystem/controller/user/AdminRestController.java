@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
@@ -66,7 +65,7 @@ public class AdminRestController {
 
     // curl -X POST localhost:8081/api/v1/admin/users -H 'Content-type:application/json' -d '{"name":"{name}","email":"{email}","password":"{password}","roles":["USER"]}' -u admin:password
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<User> create(@Valid @RequestBody User user) {
+    public ResponseEntity<User> create(@RequestBody User user) {
         log.info("Creating a user={}", user);
         checkNew(user);
         User created = userService.create(user);
