@@ -1,6 +1,8 @@
 package com.restaurant.votingsystem.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.restaurant.votingsystem.controller.json.JsonDeserializers;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -28,6 +30,7 @@ public class User extends AbstractNamedEntity {
     @NotBlank
     @Size(min = 3, max = 100)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @JsonDeserialize(using = JsonDeserializers.BCryptPasswordDeserializer.class)
     private String password;
 
     @Enumerated(EnumType.STRING)
