@@ -78,4 +78,4 @@ The main idea is to create a voting system for deciding where to have lunch at.
 * ####  POST api/v1/restaurants/{id}/votes - create a vote
        * curl -X POST localhost:8081/api/v1/restaurants/10005/votes -H 'Content-type:application/json' -u user:password
 * ####  PUT api/v1/restaurants/{id}/votes/{id} - update a vote
-       * curl -X PUT localhost:8081/api/v1/restaurants/10007/votes/10031 -H 'Content-type:application/json' -d '{"date":"2021-03-27","userId":10002}' -u user:password
+       * curl -X PUT localhost:8081/api/v1/restaurants/10007/votes/10031 -H 'Content-type:application/json' -d '{"date":"2021-03-27","userId":10002}' -u user1:password
